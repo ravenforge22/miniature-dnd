@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Scheda Personaggio - IL_TUO_SHOP</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #1a1a2e;
+            font-family: 'Georgia', 'Times New Roman', serif;
+            padding: 15px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #f9f3e2;
+            background-image: linear-gradient(to bottom, #fff8ed, #f2e6d5);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            border: 2px solid #d4af37;
+            overflow: hidden;
+            animation: fadeIn 0.8s ease-out;
+            position: relative;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .container::before {
+            content: "❧";
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            font-size: 28px;
+            color: #d4af37;
+            opacity: 0.4;
+            z-index: 1;
+        }
+
+        .container::after {
+            content: "☙";
+            position: absolute;
+            bottom: 15px;
+            right: 20px;
+            font-size: 28px;
+            color: #d4af37;
+            opacity: 0.4;
+            z-index: 1;
+        }
+
+        .shop-header {
+            background: #2c1810;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 3px solid #d4af37;
+            position: relative;
+            z-index: 2;
+        }
+
+        .shop-header img {
+            max-height: 60px;
+            margin-bottom: 10px;
+        }
+
+        .shop-header h1 {
+            color: #d4af37;
+            font-size: 26px;
+            letter-spacing: 3px;
+            font-family: 'Georgia', serif;
+            text-shadow: 2px 2px 0 #1a0f0a;
+        }
+
+        .shop-header p {
+            color: #c9ae6e;
+            font-size: 12px;
+            margin-top: 8px;
+        }
+
+        .lang-bar {
+            text-align: right;
+            padding: 12px 20px;
+            background: #e8dccc;
+            border-bottom: 1px solid #d4c4a8;
+            position: relative;
+            z-index: 2;
+        }
+
+        .lang-btn {
+            background: #2c1810;
+            color: #d4af37;
+            border: none;
+            padding: 6px 18px;
+            margin: 0 4px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        .lang-btn.active {
+            background: #d4af37;
+            color: #2c1810;
+        }
+
+        .content {
+            padding: 25px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .media-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #d4c4a8;
+        }
+
+        .char-img img {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #d4af37;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        audio {
+            width: 320px;
+            border-radius: 40px;
+        }
+
+        .stats-top {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: space-between;
+            background: #2c1810;
+            padding: 15px 20px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            color: #f9f3e2;
+        }
+
+        .stat-block {
+            text-align: center;
+            flex: 1;
+            min-width: 80px;
+        }
+
+        .stat-block label {
+            font-size: 12px;
+            color: #d4af37;
+            display: block;
+        }
+
+        .stat-block input {
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            background: #1a1a2e;
+            border: 1px solid #d4af37;
+            border-radius: 10px;
+            padding: 5px;
+            width: 80px;
+            color: #d4af37;
+            font-family: inherit;
+            margin-top: 5px;
+        }
+
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+            align-items: baseline;
+            gap: 10px;
+        }
+
+        .form-row label {
+            font-weight: bold;
+            color: #3a2a1a;
+            font-size: 14px;
+            min-width: 80px;
+        }
+
+        .form-row input, .form-row textarea {
+            flex: 1;
+            background: #fefcf5;
+            border: 1px solid #d4c4a8;
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-family: 'Georgia', serif;
+            font-size: 14px;
+        }
+
+        .form-row textarea {
+            resize: vertical;
+            min-height: 60px;
+        }
+
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin: 20px 0 20px 0;
+            border-bottom: 2px solid #d4c4a8;
+            padding-bottom: 10px;
+        }
+
+        .tab-btn {
+            background: #e8dccc;
+            color: #2c1810;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px 30px 0 0;
+            cursor: pointer;
+            font-weight: bold;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: #d4af37;
+            color: #1a1a2e;
+        }
+
+        .tab-pane {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-pane.active {
+            display: block;
+        }
+
+        .sheet-card {
+            background: #fffef7;
+            border: 1px solid #d4c4a8;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .sheet-card h3 {
+            color: #2c1810;
+            border-bottom: 2px solid #d4af37;
+            display: inline-block;
+            margin-bottom: 18px;
+            font-size: 18px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 12px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .stat-box {
+            background: #f3ecd9;
+            border: 1px solid #c9ae6e;
+            border-radius: 12px;
+            padding: 10px;
+        }
+
+        .stat-box label {
+            font-size: 13px;
+            font-weight: bold;
+            display: block;
+            color: #2c1810;
+        }
+
+        .stat-box input {
+            font-size: 22px;
+            font-weight: bold;
+            text-align: center;
+            width: 70px;
+            margin: 8px auto 0;
+            display: block;
+            background: #fffef7;
+            border: 1px solid #c9ae6e;
+            border-radius: 8px;
+            padding: 5px;
+            font-family: inherit;
+        }
+
+        .stat-box .mod {
+            font-size: 12px;
+            color: #d4af37;
+            margin-top: 5px;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px 15px;
+        }
+
+        .skill-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .skill-item label {
+            width: 150px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .skill-item input {
+            width: 55px;
+            text-align: center;
+            background: #fefcf5;
+            border: 1px solid #c9ae6e;
+            border-radius: 6px;
+            padding: 5px;
+        }
+
+        .lore-box {
+            background: #f3ecd9;
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 10px;
+        }
+
+        .lore-text {
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        .lore-textarea {
+            width: 100%;
+            background: #fffef7;
+            border: 1px solid #c9ae6e;
+            border-radius: 12px;
+            padding: 15px;
+            font-family: 'Georgia', serif;
+            display: none;
+            margin-bottom: 12px;
+            min-height: 150px;
+        }
+
+        button {
+            background: #2c1810;
+            color: #d4af37;
+            border: none;
+            padding: 8px 22px;
+            margin: 5px 5px 0 0;
+            border-radius: 40px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        button:hover {
+            background: #d4af37;
+            color: #2c1810;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 18px;
+            background: #e8dccc;
+            font-size: 11px;
+            color: #5a4a3a;
+            border-top: 1px solid #d4c4a8;
+        }
+
+        @media (max-width: 700px) {
+            .content { padding: 15px; }
+            .stats-grid { grid-template-columns: repeat(3, 1fr); }
+            .form-row { flex-direction: column; align-items: flex-start; }
+            .skills-grid { grid-template-columns: 1fr; }
+            audio { width: 100%; }
+            .stats-top { flex-wrap: wrap; }
+            .tabs { justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container" id="app">
+    <div class="shop-header">
+        <img src="immagine.png" alt="Logo" style="max-height: 60px; margin-bottom: 10px;" onerror="this.style.display='none'">
+        <h1>⚔️ Raven Forge ⚔️</h1>
+        <p>La tua avventura, le tue scelte</p>
+    </div>
+    
+    <div class="lang-bar">
+        <button class="lang-btn" id="btn-ita" onclick="setLingua('it')">🇮🇹 Italiano</button>
+        <button class="lang-btn" id="btn-eng" onclick="setLingua('en')">🇬🇧 English</button>
+    </div>
+    
+    <div class="content" id="contenuto">
+        <div style="text-align:center; padding:60px;">⏳ Caricamento personaggio...</div>
+    </div>
+    
+    <div class="footer">
+        🧙‍♂️ Tutti i dati si salvano automaticamente su questa miniatura<br>
+        Scansiona l'NFC e ritroverai sempre il tuo personaggio
+    </div>
+</div>
+
+<script>
+    // ========================================
+    // CONFIGURAZIONE - MODIFICA QUI
+    // ========================================
+    const URL_BACKUP = "https://script.google.com/macros/s/AKfycbyApNde1N4X3gjURh67eZVjRGCMkJjoSUwFmPrguxbcoWuJGA1qDYfhzN_-lFQgrV2P/exec";
+    const ID_MINIATURA = "personaggio_001";
+    const FILE_IMMAGINE_PG = "immagine.jpg";   // foto del personaggio
+    const FILE_AUDIO_ITA = "audio-ita.mp3";
+    const FILE_AUDIO_ENG = "audio-eng.mp3";
+    
+    // DATI STANDARD DEL PERSONAGGIO
+    const DATI_STANDARD = {
+        lingua: "it",
+        nome_pg: "Nome",
+        classe_pg: "Classe",
+        razza_pg: "Razza",
+        livello_pg: "1",
+        background_pg: "Background",
+        allineamento: "Neutrale",
+        esperienza: "0",
+        forza: "10",
+        destrezza: "10",
+        costituzione: "10",
+        intelligenza: "10",
+        saggezza: "10",
+        carisma: "10",
+        pf_totali: "10",
+        pf_attuali: "10",
+        pf_temp: "0",
+        dadi_vita: "1d8",
+        ca: "10",
+        iniziativa: "0",
+        velocita: "9",
+        ts_forza: "0",
+        ts_destrezza: "0",
+        ts_costituzione: "0",
+        ts_intelligenza: "0",
+        ts_saggezza: "0",
+        ts_carisma: "0",
+        acrobazia: "0",
+        addestrare_animali: "0",
+        arcano: "0",
+        atletica: "0",
+        furtivita: "0",
+        indagare: "0",
+        intimidire: "0",
+        intuizione: "0",
+        inganno: "0",
+        medicina: "0",
+        natura: "0",
+        percezione: "0",
+        persuasione: "0",
+        religione: "0",
+        rapidita_mano: "0",
+        sopravvivenza: "0",
+        storia: "0",
+        attacchi: "",
+        incantesimi: "",
+        equipaggiamento: "",
+        tratti_razziali: "Tratti razziali...",
+        privilegi_classe: "Privilegi di classe...",
+        talenti: "Talenti...",
+        note: "Note personali...",
+        lore_ita: "Scrivi qui la storia del tuo personaggio.",
+        lore_eng: "Write your character's story here."
+    };
+    
+    let dati = {};
+    let linguaCorrente = "it";
+    
+    function calcolaMod(punteggio) {
+        return Math.floor((parseInt(punteggio) - 10) / 2);
+    }
+    
+    // BACKUP (disabilitati se URL_BACKUP non è configurato)
+    async function salvaBackup() {
+        if (URL_BACKUP.includes("IL_TUO_SCRIPT_ID")) return;
+        try {
+            const daSalvare = { ...dati };
+            const url = `${URL_BACKUP}?azione=backup&id=${ID_MINIATURA}&dati=${encodeURIComponent(JSON.stringify(daSalvare))}`;
+            await fetch(url);
+        } catch(e) { console.log("Backup error"); }
+    }
+    
+    async function recuperaBackup() {
+        if (URL_BACKUP.includes("IL_TUO_SCRIPT_ID")) return null;
+        try {
+            const res = await fetch(`${URL_BACKUP}?azione=recupera&id=${ID_MINIATURA}`);
+            const txt = await res.text();
+            if (txt && txt !== "nessun_backup") return JSON.parse(txt);
+        } catch(e) {}
+        return null;
+    }
+    
+    function salvaLocale() {
+        localStorage.setItem(`pg_${ID_MINIATURA}`, JSON.stringify(dati));
+    }
+    
+    async function salvaTutto() {
+        salvaLocale();
+        await salvaBackup();
+    }
+    
+    async function salvaCampo(campo, valore) {
+        dati[campo] = valore;
+        await salvaTutto();
+    }
+    
+    async function setLingua(lingua) {
+        linguaCorrente = lingua;
+        dati.lingua = lingua;
+        await salvaTutto();
+        disegnaPagina();
+    }
+    
+    function switchTab(tabId) {
+        const panes = document.querySelectorAll('.tab-pane');
+        const btns = document.querySelectorAll('.tab-btn');
+        if (panes.length === 0) return;
+        panes.forEach(pane => pane.classList.remove('active'));
+        btns.forEach(btn => btn.classList.remove('active'));
+        const targetPane = document.getElementById(`tab-${tabId}`);
+        const targetBtn = document.getElementById(`btn-${tabId}`);
+        if (targetPane) targetPane.classList.add('active');
+        if (targetBtn) targetBtn.classList.add('active');
+    }
+    
+    function abilitaModificaLore() {
+        const testo = linguaCorrente === "it" ? dati.lore_ita : dati.lore_eng;
+        const textarea = document.getElementById("lore-textarea");
+        const loreTesto = document.getElementById("lore-testo");
+        const btnMod = document.getElementById("btn-modifica-lore");
+        const btnSalva = document.getElementById("btn-salva-lore");
+        if (textarea) textarea.value = testo;
+        if (textarea) textarea.style.display = "block";
+        if (loreTesto) loreTesto.style.display = "none";
+        if (btnMod) btnMod.style.display = "none";
+        if (btnSalva) btnSalva.style.display = "inline-block";
+    }
+    
+    async function salvaLore() {
+        const textarea = document.getElementById("lore-textarea");
+        if (!textarea) return;
+        const nuovo = textarea.value;
+        if (linguaCorrente === "it") {
+            dati.lore_ita = nuovo;
+        } else {
+            dati.lore_eng = nuovo;
+        }
+        await salvaTutto();
+        disegnaPagina();
+    }
+    
+    function escapeHtml(str) {
+        if (!str) return "";
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        });
+    }
+    
+    function disegnaPagina() {
+        const modForza = calcolaMod(dati.forza);
+        const modDes = calcolaMod(dati.destrezza);
+        const modCos = calcolaMod(dati.costituzione);
+        const modInt = calcolaMod(dati.intelligenza);
+        const modSag = calcolaMod(dati.saggezza);
+        const modCar = calcolaMod(dati.carisma);
+        const lore = linguaCorrente === "it" ? dati.lore_ita : dati.lore_eng;
+        
+        const html = `
+            <div class="media-row">
+                <div class="char-img">
+                    <img src="${FILE_IMMAGINE_PG}" alt="Personaggio" onerror="this.src='https://via.placeholder.com/140?text=No+Image'">
+                </div>
+                <audio controls>
+                    <source src="${linguaCorrente === "it" ? FILE_AUDIO_ITA : FILE_AUDIO_ENG}" type="audio/mpeg">
+                </audio>
+            </div>
+            
+            <div class="stats-top">
+                <div class="stat-block"><label>Classe Armatura (CA)</label><input type="text" value="${escapeHtml(dati.ca)}" onchange="salvaCampo('ca', this.value)"></div>
+                <div class="stat-block"><label>Punti Ferita</label><input type="text" value="${escapeHtml(dati.pf_totali)}" onchange="salvaCampo('pf_totali', this.value)"></div>
+                <div class="stat-block"><label>PF Attuali</label><input type="text" value="${escapeHtml(dati.pf_attuali)}" onchange="salvaCampo('pf_attuali', this.value)"></div>
+                <div class="stat-block"><label>Iniziativa</label><input type="text" value="${escapeHtml(dati.iniziativa)}" onchange="salvaCampo('iniziativa', this.value)"></div>
+                <div class="stat-block"><label>Velocità</label><input type="text" value="${escapeHtml(dati.velocita)}" onchange="salvaCampo('velocita', this.value)"></div>
+            </div>
+            
+            <div class="form-row">
+                <label>Nome:</label><input type="text" value="${escapeHtml(dati.nome_pg)}" onchange="salvaCampo('nome_pg', this.value)">
+                <label>Classe:</label><input type="text" value="${escapeHtml(dati.classe_pg)}" onchange="salvaCampo('classe_pg', this.value)">
+                <label>Livello:</label><input type="text" value="${escapeHtml(dati.livello_pg)}" onchange="salvaCampo('livello_pg', this.value)" style="width:70px;">
+            </div>
+            <div class="form-row">
+                <label>Razza:</label><input type="text" value="${escapeHtml(dati.razza_pg)}" onchange="salvaCampo('razza_pg', this.value)">
+                <label>Background:</label><input type="text" value="${escapeHtml(dati.background_pg)}" onchange="salvaCampo('background_pg', this.value)">
+                <label>Allineamento:</label><input type="text" value="${escapeHtml(dati.allineamento)}" onchange="salvaCampo('allineamento', this.value)">
+            </div>
+            
+            <div class="tabs">
+                <button class="tab-btn active" id="btn-combat" onclick="switchTab('combat')">⚔️ COMBATTIMENTO</button>
+                <button class="tab-btn" id="btn-spells" onclick="switchTab('spells')">🔮 INCANTESIMI</button>
+                <button class="tab-btn" id="btn-inventory" onclick="switchTab('inventory')">🎒 EQUIPAGGIAMENTO</button>
+                <button class="tab-btn" id="btn-features" onclick="switchTab('features')">✨ TRATTI</button>
+                <button class="tab-btn" id="btn-notes" onclick="switchTab('notes')">📝 NOTE & LORE</button>
+            </div>
+            
+            <div id="tab-combat" class="tab-pane active">
+                <div class="sheet-card">
+                    <h3>⭐ CARATTERISTICHE</h3>
+                    <div class="stats-grid">
+                        <div class="stat-box"><label>FORZA</label><input type="number" value="${dati.forza}" onchange="salvaCampo('forza', this.value); disegnaPagina()"><div class="mod">(${modForza >= 0 ? '+' : ''}${modForza})</div></div>
+                        <div class="stat-box"><label>DESTREZZA</label><input type="number" value="${dati.destrezza}" onchange="salvaCampo('destrezza', this.value); disegnaPagina()"><div class="mod">(${modDes >= 0 ? '+' : ''}${modDes})</div></div>
+                        <div class="stat-box"><label>COSTITUZIONE</label><input type="number" value="${dati.costituzione}" onchange="salvaCampo('costituzione', this.value); disegnaPagina()"><div class="mod">(${modCos >= 0 ? '+' : ''}${modCos})</div></div>
+                        <div class="stat-box"><label>INTELLIGENZA</label><input type="number" value="${dati.intelligenza}" onchange="salvaCampo('intelligenza', this.value); disegnaPagina()"><div class="mod">(${modInt >= 0 ? '+' : ''}${modInt})</div></div>
+                        <div class="stat-box"><label>SAGGEZZA</label><input type="number" value="${dati.saggezza}" onchange="salvaCampo('saggezza', this.value); disegnaPagina()"><div class="mod">(${modSag >= 0 ? '+' : ''}${modSag})</div></div>
+                        <div class="stat-box"><label>CARISMA</label><input type="number" value="${dati.carisma}" onchange="salvaCampo('carisma', this.value); disegnaPagina()"><div class="mod">(${modCar >= 0 ? '+' : ''}${modCar})</div></div>
+                    </div>
+                </div>
+                
+                <div class="sheet-card">
+                    <h3>🛡️ TIRO SALVEZZA</h3>
+                    <div class="stats-grid">
+                        <div class="stat-box"><label>FORZA</label><input type="text" value="${dati.ts_forza}" onchange="salvaCampo('ts_forza', this.value)"></div>
+                        <div class="stat-box"><label>DESTREZZA</label><input type="text" value="${dati.ts_destrezza}" onchange="salvaCampo('ts_destrezza', this.value)"></div>
+                        <div class="stat-box"><label>COSTITUZIONE</label><input type="text" value="${dati.ts_costituzione}" onchange="salvaCampo('ts_costituzione', this.value)"></div>
+                        <div class="stat-box"><label>INTELLIGENZA</label><input type="text" value="${dati.ts_intelligenza}" onchange="salvaCampo('ts_intelligenza', this.value)"></div>
+                        <div class="stat-box"><label>SAGGEZZA</label><input type="text" value="${dati.ts_saggezza}" onchange="salvaCampo('ts_saggezza', this.value)"></div>
+                        <div class="stat-box"><label>CARISMA</label><input type="text" value="${dati.ts_carisma}" onchange="salvaCampo('ts_carisma', this.value)"></div>
+                    </div>
+                </div>
+                
+                <div class="sheet-card">
+                    <h3>🎯 COMPETENZE</h3>
+                    <div class="skills-grid">
+                        <div class="skill-item"><label>Acrobazia (Des):</label><input type="text" value="${dati.acrobazia}" onchange="salvaCampo('acrobazia', this.value)"></div>
+                        <div class="skill-item"><label>Atletica (For):</label><input type="text" value="${dati.atletica}" onchange="salvaCampo('atletica', this.value)"></div>
+                        <div class="skill-item"><label>Furtività (Des):</label><input type="text" value="${dati.furtivita}" onchange="salvaCampo('furtivita', this.value)"></div>
+                        <div class="skill-item"><label>Percezione (Sag):</label><input type="text" value="${dati.percezione}" onchange="salvaCampo('percezione', this.value)"></div>
+                        <div class="skill-item"><label>Sopravvivenza (Sag):</label><input type="text" value="${dati.sopravvivenza}" onchange="salvaCampo('sopravvivenza', this.value)"></div>
+                        <div class="skill-item"><label>Arcano (Int):</label><input type="text" value="${dati.arcano}" onchange="salvaCampo('arcano', this.value)"></div>
+                        <div class="skill-item"><label>Indagare (Int):</label><input type="text" value="${dati.indagare}" onchange="salvaCampo('indagare', this.value)"></div>
+                        <div class="skill-item"><label>Intuizione (Sag):</label><input type="text" value="${dati.intuizione}" onchange="salvaCampo('intuizione', this.value)"></div>
+                        <div class="skill-item"><label>Intimidire (Car):</label><input type="text" value="${dati.intimidire}" onchange="salvaCampo('intimidire', this.value)"></div>
+                        <div class="skill-item"><label>Persuasione (Car):</label><input type="text" value="${dati.persuasione}" onchange="salvaCampo('persuasione', this.value)"></div>
+                        <div class="skill-item"><label>Religione (Int):</label><input type="text" value="${dati.religione}" onchange="salvaCampo('religione', this.value)"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="tab-spells" class="tab-pane">
+                <div class="sheet-card">
+                    <h3>🔮 INCANTESIMI</h3>
+                    <div class="form-row"><label>CD Tiro Salvezza:</label><input type="text" placeholder="CD" onchange="salvaCampo('cd_ts', this.value)"></div>
+                    <div class="form-row"><label>Bonus Attacco:</label><input type="text" placeholder="Bonus" onchange="salvaCampo('bonus_attacco', this.value)"></div>
+                    <textarea rows="6" placeholder="Lista incantesimi e trucchetti..." onchange="salvaCampo('incantesimi', this.value)">${escapeHtml(dati.incantesimi)}</textarea>
+                </div>
+            </div>
+            
+            <div id="tab-inventory" class="tab-pane">
+                <div class="sheet-card">
+                    <h3>🎒 EQUIPAGGIAMENTO</h3>
+                    <textarea rows="8" placeholder="Armi, armature, oggetti, monete..." onchange="salvaCampo('equipaggiamento', this.value)">${escapeHtml(dati.equipaggiamento)}</textarea>
+                </div>
+            </div>
+            
+            <div id="tab-features" class="tab-pane">
+                <div class="sheet-card">
+                    <h3>✨ TRATTI RAZZIALI</h3>
+                    <textarea rows="3" onchange="salvaCampo('tratti_razziali', this.value)">${escapeHtml(dati.tratti_razziali)}</textarea>
+                </div>
+                <div class="sheet-card">
+                    <h3>⚙️ PRIVILEGI DI CLASSE</h3>
+                    <textarea rows="3" onchange="salvaCampo('privilegi_classe', this.value)">${escapeHtml(dati.privilegi_classe)}</textarea>
+                </div>
+                <div class="sheet-card">
+                    <h3>🏆 TALENTI</h3>
+                    <textarea rows="3" onchange="salvaCampo('talenti', this.value)">${escapeHtml(dati.talenti)}</textarea>
+                </div>
+            </div>
+            
+            <div id="tab-notes" class="tab-pane">
+                <div class="sheet-card">
+                    <h3>📝 NOTE</h3>
+                    <textarea rows="4" onchange="salvaCampo('note', this.value)">${escapeHtml(dati.note)}</textarea>
+                </div>
+                
+                <div class="sheet-card">
+                    <h3>📖 LORE / STORIA</h3>
+                    <div class="lore-box">
+                        <div id="lore-testo" class="lore-text">${escapeHtml(lore).replace(/\n/g, '<br>')}</div>
+                        <textarea id="lore-textarea" class="lore-textarea" rows="8">${escapeHtml(lore)}</textarea>
+                        <button id="btn-modifica-lore" onclick="abilitaModificaLore()">✏️ Modifica Lore</button>
+                        <button id="btn-salva-lore" style="display:none;" onclick="salvaLore()">💾 Salva Lore</button>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        const contenuto = document.getElementById("contenuto");
+        if (contenuto) contenuto.innerHTML = html;
+        
+        // Riapplica la tab attiva dopo il refresh
+        const activeTab = document.querySelector('.tab-btn.active');
+        if (activeTab && activeTab.id) {
+            const tabId = activeTab.id.replace('btn-', '');
+            const pane = document.getElementById(`tab-${tabId}`);
+            if (pane) {
+                document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+                pane.classList.add('active');
+            }
+        } else {
+            const defaultPane = document.getElementById('tab-combat');
+            if (defaultPane) defaultPane.classList.add('active');
+        }
+    }
+    
+    async function caricaDati() {
+        try {
+            let locali = localStorage.getItem(`pg_${ID_MINIATURA}`);
+            if (locali) {
+                dati = JSON.parse(locali);
+                linguaCorrente = dati.lingua || "it";
+            } else {
+                let backup = await recuperaBackup();
+                if (backup) {
+                    dati = backup;
+                    linguaCorrente = dati.lingua || "it";
+                    salvaLocale();
+                } else {
+                    dati = JSON.parse(JSON.stringify(DATI_STANDARD));
+                    salvaLocale();
+                    await salvaBackup();
+                }
+            }
+            disegnaPagina();
+        } catch(e) {
+            console.log("Errore caricamento:", e);
+            const contenuto = document.getElementById("contenuto");
+            if (contenuto) {
+                contenuto.innerHTML = '<div style="text-align:center; padding:60px; color:red;">❌ Errore nel caricamento. Ricarica la pagina.</div>';
+            }
+        }
+    }
+    
+    // Esponi le funzioni globalmente
+    window.setLingua = setLingua;
+    window.switchTab = switchTab;
+    window.abilitaModificaLore = abilitaModificaLore;
+    window.salvaLore = salvaLore;
+    window.salvaCampo = salvaCampo;
+    
+    caricaDati();
+</script>
+</body>
+</html>

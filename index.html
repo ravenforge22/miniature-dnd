@@ -429,9 +429,46 @@
             border-top: 1px solid #d4c4a8;
         }
 
-                     @media (max-width: 700px) {
+                       @media (max-width: 700px) {
             .content { padding: 15px; }
-            .stats-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+            
+            /* STATISTICHE: 3 colonne, ma più larghe e con font più piccolo */
+            .stats-grid {
+                display: grid !important;
+                grid-template-columns: repeat(3, 1fr) !important;
+                gap: 6px !important;
+                margin: 15px 0 !important;
+            }
+            
+            .stat-box {
+                padding: 4px 2px !important;
+                border-radius: 8px !important;
+                min-width: 0 !important;
+            }
+            
+            .stat-box label {
+                font-size: 9px !important;
+                letter-spacing: -0.3px !important;
+                white-space: nowrap !important;
+                overflow: hidden !important;
+                text-overflow: ellipsis !important;
+                display: block !important;
+                width: 100% !important;
+            }
+            
+            .stat-box input {
+                width: 50px !important;
+                font-size: 16px !important;
+                padding: 2px !important;
+                margin: 2px auto 0 !important;
+            }
+            
+            .stat-box .mod {
+                font-size: 8px !important;
+                margin-top: 1px !important;
+            }
+            
+            /* Form e altri */
             .form-row { flex-direction: column; align-items: flex-start; }
             .form-row label { margin-bottom: 5px; }
             .skills-grid { grid-template-columns: 1fr; }
@@ -440,23 +477,20 @@
             .tabs { justify-content: center; }
             .skill-item label { width: 100%; }
             
-            /* RIDUCO LEGGERMENTE I RIQUADRI PER FARLI STARE */
-            .stat-box {
-                padding: 6px 4px !important;
+            /* Forza tutti i campi a non uscire */
+            .form-row input, 
+            .form-row textarea,
+            .skill-item input,
+            .stats-top input,
+            .stat-box input,
+            .sheet-card textarea {
+                max-width: 100% !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
             }
             
-            .stat-box label {
-                font-size: 10px !important;
-            }
-            
-            .stat-box input {
-                width: 55px !important;
-                font-size: 16px !important;
-                padding: 4px !important;
-            }
-            
-            .stat-box .mod {
-                font-size: 9px !important;
+            .skill-item {
+                flex-wrap: wrap !important;
             }
         }
             

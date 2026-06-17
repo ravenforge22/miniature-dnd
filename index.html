@@ -429,16 +429,36 @@
             border-top: 1px solid #d4c4a8;
         }
 
-             @media (max-width: 700px) {
+                     @media (max-width: 700px) {
             .content { padding: 15px; }
-            .stats-grid { grid-template-columns: repeat(3, 1fr); }
+            .stats-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
             .form-row { flex-direction: column; align-items: flex-start; }
             .form-row label { margin-bottom: 5px; }
             .skills-grid { grid-template-columns: 1fr; }
             audio { width: 100%; }
             .stats-top { flex-wrap: wrap; }
             .tabs { justify-content: center; }
-            .skill-item label { width: 140px; }
+            .skill-item label { width: 100%; }
+            
+            /* RIDUCO LEGGERMENTE I RIQUADRI PER FARLI STARE */
+            .stat-box {
+                padding: 6px 4px !important;
+            }
+            
+            .stat-box label {
+                font-size: 10px !important;
+            }
+            
+            .stat-box input {
+                width: 55px !important;
+                font-size: 16px !important;
+                padding: 4px !important;
+            }
+            
+            .stat-box .mod {
+                font-size: 9px !important;
+            }
+        }
             
             /* NUOVE REGOLE PER SISTEMARE IL LAYOUT CHE TAGLIA A DESTRA */
             .form-row input, 

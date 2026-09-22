@@ -769,12 +769,14 @@
 
         return new Promise((resolve) => {
             jsonpRequest(url, 'callback', (data) => {
+                console.log("Risposta server:", data);
                 if (data && data.status !== "nessun_backup" && data.status !== "error") {
                     resolve(data);
                 } else {
                     resolve(null);
                 }
             }, () => {
+                console.warn("Errore JSONP nel recupero backup");
                 resolve(null);
             });
         });
@@ -1069,42 +1071,72 @@
     // ========================================
     async function caricaDati() {
         try {
-            const backup = await recuperaBackup();
+            console.log("🔄 Avvio caricamento...");
+
+            // 1. Leggi il locale PRIMA (istantaneo, no rete)
             const localiRaw = localStorage.getItem(`pg_${ID_MINIATURA}`);
             const datiLocali = localiRaw ? JSON.parse(localiRaw) : null;
+            console.log("💾 Locale presente:", datiLocali ? "SÌ" : "NO");
 
-            if (backup && datiLocali) {
-                const t_backup = backup._ultimaModifica || 0;
-                const t_locali = datiLocali._ultimaModifica || 0;
-                if (t_backup >= t_locali) {
-                    dati = backup;
-                    console.log("✅ Caricato dal BACKUP (più recente)");
-                } else {
-                    dati = datiLocali;
-                    console.log("✅ Caricato dal LOCALE (più recente del backup)");
-                    await salvaBackup();
-                }
-            } else if (backup) {
-                dati = backup;
-                console.log("✅ Caricato dal BACKUP");
-            } else if (datiLocali) {
+            // 2. Se il locale ha dati validi, disegna SUBITO
+            if (datiLocali && Object.keys(datiLocali).length > 5) {
                 dati = datiLocali;
-                console.log("✅ Caricato dal LOCALE (backup non disponibile)");
-            } else {
-                dati = JSON.parse(JSON.stringify(DATI_STANDARD));
-                console.log("🆕 Primo avvio: dati standard");
-                await salvaBackup();
+                linguaCorrente = dati.lingua || "it";
+                disegnaPagina();
+                console.log("✅ Disegnato subito dal LOCALE");
             }
 
-            linguaCorrente = dati.lingua || "it";
-            salvaLocale();
-            disegnaPagina();
+            // 3. Chiedi al server in background
+            let backup = null;
+            try {
+                backup = await Promise.race([
+                    recuperaBackup(),
+                    new Promise(resolve => setTimeout(() => resolve("TIMEOUT"), 8000))
+                ]);
+                if (backup === "TIMEOUT") {
+                    console.warn("⚠️ Timeout nel recupero del backup");
+                    backup = null;
+                }
+            } catch (err) {
+                console.warn("⚠️ Errore nel recupero del backup:", err);
+                backup = null;
+            }
+            console.log("📥 Backup ricevuto:", backup ? "SÌ" : "NO");
+
+            // 4. Aggiorna solo se il backup è più recente
+            if (backup) {
+                const t_backup = backup._ultimaModifica || 0;
+                const t_locale = datiLocali ? (datiLocali._ultimaModifica || 0) : 0;
+
+                if (!datiLocali || t_backup > t_locale) {
+                    dati = backup;
+                    linguaCorrente = dati.lingua || "it";
+                    salvaLocale();
+                    disegnaPagina();
+                    console.log("🔄 Aggiornato dal BACKUP");
+                } else {
+                    console.log("✅ Backup non più recente, mantengo il locale");
+                }
+            } else if (!datiLocali) {
+                // Nessun locale E nessun backup: NUOVO PG
+                // NON salvo sul server (evita di sovrascrivere con dati blank)
+                dati = JSON.parse(JSON.stringify(DATI_STANDARD));
+                linguaCorrente = "it";
+                disegnaPagina();
+                console.warn("⚠️ Nessun dato trovato. NON salvo sul server per sicurezza.");
+            }
 
         } catch (e) {
             console.log("Errore caricamento:", e);
             const contenuto = document.getElementById("contenuto");
             if (contenuto) {
-                contenuto.innerHTML = '<div style="text-align:center; padding:60px; color:red;">❌ Errore nel caricamento. Ricarica la pagina.</div>';
+                contenuto.innerHTML = `
+                    <div style="text-align:center; padding:60px; color:red;">
+                        ❌ Errore nel caricamento.<br>
+                        <small>${escapeHtml(String(e))}</small><br><br>
+                        <button onclick="location.reload()">Ricarica</button>
+                    </div>
+                `;
             }
         }
     }

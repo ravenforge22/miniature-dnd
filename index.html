@@ -519,12 +519,26 @@
     // ========================================
     // CONFIGURAZIONE
     // ========================================
-    const URL_BACKUP = "https://script.google.com/macros/s/AKfycbwdicnr7glb8tl8WbKQkmbKHslNs7umhOa236lNqCg_2-4fazgXEBtqFo09VcWQzpFDHw/exec";
-    const ID_MINIATURA = "personaggio_001";
-    const FILE_IMMAGINE_PG = "immagine.jpg";
-    const FILE_AUDIO_ITA = "audio-ita.mp3";
-    const FILE_AUDIO_ENG = "audio-eng.mp3";
 
+const URL_BACKUP = "https://script.google.com/macros/s/AKfycbwdicnr7glb8tl8WbKQkmbKHslNs7umhOa236lNqCg_2-4fazgXEBtqFo09VcWQzpFDHw/exec";
+
+// ==========================================
+// LEGGI L'UID DAL TAG NFC (dall'URL)
+// ==========================================
+// Il tag NFC genera URL tipo: https://.../miniature-dnd/?uid=04A23BC1D52A80
+// Qui leggiamo quel valore e lo usiamo come chiave univoca
+const urlParams = new URLSearchParams(window.location.search);
+const TAG_UID = urlParams.get('uid');
+
+// Se c'è un UID, usa quello come ID personaggio (univoco per tag)
+// Altrimenti fallback a "personaggio_001" per accesso diretto senza NFC
+const ID_MINIATURA = TAG_UID ? `nfc_${TAG_UID}` : "personaggio_001";
+
+console.log("🆔 ID personaggio:", ID_MINIATURA, "(UID tag:", TAG_UID || "nessuno", ")");
+
+const FILE_IMMAGINE_PG = "immagine.jpg";
+const FILE_AUDIO_ITA = "audio-ita.mp3";
+const FILE_AUDIO_ENG = "audio-eng.mp3";
     // ========================================
     // TRADUZIONI
     // ========================================

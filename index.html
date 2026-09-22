@@ -5,487 +5,72 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>Scheda Personaggio - Raven Forge</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html, body {
-            overflow-x: hidden;
-            max-width: 100vw;
-        }
-
-        body {
-            background: #1a1a2e;
-            font-family: 'Georgia', 'Times New Roman', serif;
-            padding: 15px;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: #f9f3e2;
-            background-image: linear-gradient(to bottom, #fff8ed, #f2e6d5);
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
-            border: 2px solid #d4af37;
-            overflow: hidden;
-            animation: fadeIn 0.8s ease-out;
-            position: relative;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .container::before {
-            content: "❧";
-            position: absolute;
-            top: 15px;
-            left: 20px;
-            font-size: 28px;
-            color: #d4af37;
-            opacity: 0.4;
-            z-index: 1;
-        }
-
-        .container::after {
-            content: "☙";
-            position: absolute;
-            bottom: 15px;
-            right: 20px;
-            font-size: 28px;
-            color: #d4af37;
-            opacity: 0.4;
-            z-index: 1;
-        }
-
-        .shop-header {
-            background: #2c1810;
-            padding: 20px;
-            text-align: center;
-            border-bottom: 3px solid #d4af37;
-            position: relative;
-            z-index: 2;
-        }
-
-        .shop-header img {
-            max-height: 60px;
-            margin-bottom: 10px;
-        }
-
-        .shop-header h1 {
-            color: #d4af37;
-            font-size: 26px;
-            letter-spacing: 3px;
-            text-shadow: 2px 2px 0 #1a0f0a;
-        }
-
-        .shop-header p {
-            color: #c9ae6e;
-            font-size: 12px;
-            margin-top: 8px;
-        }
-
-        .lang-bar {
-            text-align: right;
-            padding: 12px 20px;
-            background: #e8dccc;
-            border-bottom: 1px solid #d4c4a8;
-            position: relative;
-            z-index: 2;
-        }
-
-        .lang-btn {
-            background: #2c1810;
-            color: #d4af37;
-            border: none;
-            padding: 6px 18px;
-            margin: 0 4px;
-            border-radius: 30px;
-            cursor: pointer;
-            font-family: inherit;
-            font-weight: bold;
-            font-size: 13px;
-        }
-
-        .lang-btn.active {
-            background: #d4af37;
-            color: #2c1810;
-        }
-
-        .content {
-            padding: 25px;
-            position: relative;
-            z-index: 2;
-        }
-
-        .media-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 25px;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 25px;
-            padding-bottom: 20px;
-            border-bottom: 2px solid #d4c4a8;
-        }
-
-        .char-img img {
-            width: 140px;
-            height: 140px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid #d4af37;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-
-        audio {
-            width: 320px;
-            border-radius: 40px;
-        }
-
-        .stats-top {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            justify-content: space-between;
-            background: #2c1810;
-            padding: 15px 20px;
-            border-radius: 15px;
-            margin-bottom: 25px;
-            color: #f9f3e2;
-        }
-
-        .stat-block {
-            text-align: center;
-            flex: 1;
-            min-width: 80px;
-        }
-
-        .stat-block label {
-            font-size: 11px;
-            color: #d4af37;
-            display: block;
-        }
-
-        .stat-block input {
-            font-size: 18px;
-            font-weight: bold;
-            text-align: center;
-            background: #1a1a2e;
-            border: 1px solid #d4af37;
-            border-radius: 10px;
-            padding: 5px;
-            width: 80px;
-            color: #d4af37;
-            font-family: inherit;
-            margin-top: 5px;
-        }
-
-        .form-row {
-            display: flex;
-            flex-wrap: wrap;
-            margin-bottom: 12px;
-            align-items: baseline;
-            gap: 10px;
-        }
-
-        .form-row label {
-            font-weight: bold;
-            color: #3a2a1a;
-            font-size: 14px;
-            min-width: 90px;
-        }
-
-        .form-row input,
-        .form-row textarea {
-            flex: 1;
-            background: #fefcf5;
-            border: 1px solid #d4c4a8;
-            border-radius: 8px;
-            padding: 8px 12px;
-            font-family: 'Georgia', serif;
-            font-size: 14px;
-        }
-
-        .tabs {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 5px;
-            margin: 20px 0;
-            border-bottom: 2px solid #d4c4a8;
-            padding-bottom: 10px;
-        }
-
-        .tab-btn {
-            background: #e8dccc;
-            color: #2c1810;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 30px 30px 0 0;
-            cursor: pointer;
-            font-weight: bold;
-            font-family: inherit;
-            font-size: 13px;
-        }
-
-        .tab-btn.active {
-            background: #d4af37;
-            color: #1a1a2e;
-        }
-
-        .tab-pane {
-            display: none;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .tab-pane.active {
-            display: block;
-        }
-
-        .sheet-card {
-            background: #fffef7;
-            border: 1px solid #d4c4a8;
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-
-        .sheet-card h3 {
-            color: #2c1810;
-            border-bottom: 2px solid #d4af37;
-            display: inline-block;
-            margin-bottom: 18px;
-            font-size: 18px;
-        }
-
-        .sheet-card textarea {
-            width: 100%;
-            background: #fefcf5;
-            border: 1px solid #d4c4a8;
-            border-radius: 8px;
-            padding: 10px 12px;
-            font-family: 'Georgia', serif;
-            font-size: 14px;
-            resize: vertical;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(6, 1fr);
-            gap: 12px;
-            margin: 20px 0;
-            text-align: center;
-        }
-
-        .stat-box {
-            background: #f3ecd9;
-            border: 1px solid #c9ae6e;
-            border-radius: 12px;
-            padding: 10px;
-        }
-
-        .stat-box label {
-            font-size: 12px;
-            font-weight: bold;
-            display: block;
-            color: #2c1810;
-        }
-
-        .stat-box input {
-            font-size: 22px;
-            font-weight: bold;
-            text-align: center;
-            width: 70px;
-            margin: 8px auto 0;
-            display: block;
-            background: #fffef7;
-            border: 1px solid #c9ae6e;
-            border-radius: 8px;
-            padding: 5px;
-            font-family: inherit;
-        }
-
-        .stat-box .mod {
-            font-size: 12px;
-            color: #d4af37;
-            margin-top: 5px;
-        }
-
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 8px 15px;
-        }
-
-        .skill-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .skill-item label {
-            width: 160px;
-            font-size: 12px;
-            font-weight: bold;
-        }
-
-        .skill-item input {
-            width: 55px;
-            text-align: center;
-            background: #fefcf5;
-            border: 1px solid #c9ae6e;
-            border-radius: 6px;
-            padding: 5px;
-        }
-
-        .lore-box {
-            background: #f3ecd9;
-            border-radius: 12px;
-            padding: 15px;
-            margin-top: 10px;
-        }
-
-        .lore-text {
-            line-height: 1.6;
-            margin-bottom: 12px;
-            white-space: pre-wrap;
-        }
-
-        .lore-textarea {
-            width: 100%;
-            background: #fffef7;
-            border: 1px solid #c9ae6e;
-            border-radius: 12px;
-            padding: 15px;
-            font-family: 'Georgia', serif;
-            display: none;
-            margin-bottom: 12px;
-            min-height: 150px;
-        }
-
-        button {
-            background: #2c1810;
-            color: #d4af37;
-            border: none;
-            padding: 8px 22px;
-            margin: 5px 5px 0 0;
-            border-radius: 40px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 13px;
-        }
-
-        button:hover {
-            background: #d4af37;
-            color: #2c1810;
-        }
-
-        .footer {
-            text-align: center;
-            padding: 18px;
-            background: #e8dccc;
-            font-size: 11px;
-            color: #5a4a3a;
-            border-top: 1px solid #d4c4a8;
-        }
-
-        .sync-status {
-            position: fixed;
-            bottom: 15px;
-            right: 15px;
-            background: #2c1810;
-            color: #d4af37;
-            padding: 8px 15px;
-            border-radius: 30px;
-            font-size: 11px;
-            font-family: 'Georgia', serif;
-            border: 1px solid #d4af37;
-            opacity: 0;
-            transition: opacity 0.3s;
-            z-index: 9999;
-            pointer-events: none;
-        }
-
-        .sync-status.show {
-            opacity: 1;
-        }
-
-        /* ============================================ */
-        /* RESPONSIVE MOBILE                            */
-        /* ============================================ */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { overflow-x: hidden; max-width: 100vw; }
+        body { background: #1a1a2e; font-family: 'Georgia', 'Times New Roman', serif; padding: 15px; }
+        .container { max-width: 1200px; margin: 0 auto; background: #f9f3e2; background-image: linear-gradient(to bottom, #fff8ed, #f2e6d5); border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.4); border: 2px solid #d4af37; overflow: hidden; animation: fadeIn 0.8s ease-out; position: relative; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .container::before { content: "❧"; position: absolute; top: 15px; left: 20px; font-size: 28px; color: #d4af37; opacity: 0.4; z-index: 1; }
+        .container::after { content: "☙"; position: absolute; bottom: 15px; right: 20px; font-size: 28px; color: #d4af37; opacity: 0.4; z-index: 1; }
+        .shop-header { background: #2c1810; padding: 20px; text-align: center; border-bottom: 3px solid #d4af37; position: relative; z-index: 2; }
+        .shop-header img { max-height: 60px; margin-bottom: 10px; }
+        .shop-header h1 { color: #d4af37; font-size: 26px; letter-spacing: 3px; text-shadow: 2px 2px 0 #1a0f0a; }
+        .shop-header p { color: #c9ae6e; font-size: 12px; margin-top: 8px; }
+        .lang-bar { text-align: right; padding: 12px 20px; background: #e8dccc; border-bottom: 1px solid #d4c4a8; position: relative; z-index: 2; }
+        .lang-btn { background: #2c1810; color: #d4af37; border: none; padding: 6px 18px; margin: 0 4px; border-radius: 30px; cursor: pointer; font-family: inherit; font-weight: bold; font-size: 13px; }
+        .lang-btn.active { background: #d4af37; color: #2c1810; }
+        .content { padding: 25px; position: relative; z-index: 2; }
+        .media-row { display: flex; flex-wrap: wrap; gap: 25px; justify-content: center; align-items: center; margin-bottom: 25px; padding-bottom: 20px; border-bottom: 2px solid #d4c4a8; }
+        .char-img img { width: 140px; height: 140px; border-radius: 50%; object-fit: cover; border: 4px solid #d4af37; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        audio { width: 320px; border-radius: 40px; }
+        .stats-top { display: flex; flex-wrap: wrap; gap: 15px; justify-content: space-between; background: #2c1810; padding: 15px 20px; border-radius: 15px; margin-bottom: 25px; color: #f9f3e2; }
+        .stat-block { text-align: center; flex: 1; min-width: 80px; }
+        .stat-block label { font-size: 11px; color: #d4af37; display: block; }
+        .stat-block input { font-size: 18px; font-weight: bold; text-align: center; background: #1a1a2e; border: 1px solid #d4af37; border-radius: 10px; padding: 5px; width: 80px; color: #d4af37; font-family: inherit; margin-top: 5px; }
+        .form-row { display: flex; flex-wrap: wrap; margin-bottom: 12px; align-items: baseline; gap: 10px; }
+        .form-row label { font-weight: bold; color: #3a2a1a; font-size: 14px; min-width: 90px; }
+        .form-row input, .form-row textarea { flex: 1; background: #fefcf5; border: 1px solid #d4c4a8; border-radius: 8px; padding: 8px 12px; font-family: 'Georgia', serif; font-size: 14px; }
+        .tabs { display: flex; flex-wrap: wrap; gap: 5px; margin: 20px 0; border-bottom: 2px solid #d4c4a8; padding-bottom: 10px; }
+        .tab-btn { background: #e8dccc; color: #2c1810; border: none; padding: 10px 20px; border-radius: 30px 30px 0 0; cursor: pointer; font-weight: bold; font-family: inherit; font-size: 13px; }
+        .tab-btn.active { background: #d4af37; color: #1a1a2e; }
+        .tab-pane { display: none; animation: fadeIn 0.3s ease; }
+        .tab-pane.active { display: block; }
+        .sheet-card { background: #fffef7; border: 1px solid #d4c4a8; border-radius: 15px; padding: 20px; margin-bottom: 20px; }
+        .sheet-card h3 { color: #2c1810; border-bottom: 2px solid #d4af37; display: inline-block; margin-bottom: 18px; font-size: 18px; }
+        .sheet-card textarea { width: 100%; background: #fefcf5; border: 1px solid #d4c4a8; border-radius: 8px; padding: 10px 12px; font-family: 'Georgia', serif; font-size: 14px; resize: vertical; }
+        .stats-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; margin: 20px 0; text-align: center; }
+        .stat-box { background: #f3ecd9; border: 1px solid #c9ae6e; border-radius: 12px; padding: 10px; }
+        .stat-box label { font-size: 12px; font-weight: bold; display: block; color: #2c1810; }
+        .stat-box input { font-size: 22px; font-weight: bold; text-align: center; width: 70px; margin: 8px auto 0; display: block; background: #fffef7; border: 1px solid #c9ae6e; border-radius: 8px; padding: 5px; font-family: inherit; }
+        .stat-box .mod { font-size: 12px; color: #d4af37; margin-top: 5px; }
+        .skills-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px 15px; }
+        .skill-item { display: flex; align-items: center; gap: 8px; }
+        .skill-item label { width: 160px; font-size: 12px; font-weight: bold; }
+        .skill-item input { width: 55px; text-align: center; background: #fefcf5; border: 1px solid #c9ae6e; border-radius: 6px; padding: 5px; }
+        .lore-box { background: #f3ecd9; border-radius: 12px; padding: 15px; margin-top: 10px; }
+        .lore-text { line-height: 1.6; margin-bottom: 12px; white-space: pre-wrap; }
+        .lore-textarea { width: 100%; background: #fffef7; border: 1px solid #c9ae6e; border-radius: 12px; padding: 15px; font-family: 'Georgia', serif; display: none; margin-bottom: 12px; min-height: 150px; }
+        button { background: #2c1810; color: #d4af37; border: none; padding: 8px 22px; margin: 5px 5px 0 0; border-radius: 40px; cursor: pointer; font-weight: bold; font-size: 13px; }
+        button:hover { background: #d4af37; color: #2c1810; }
+        .footer { text-align: center; padding: 18px; background: #e8dccc; font-size: 11px; color: #5a4a3a; border-top: 1px solid #d4c4a8; }
+        .sync-status { position: fixed; bottom: 15px; right: 15px; background: #2c1810; color: #d4af37; padding: 8px 15px; border-radius: 30px; font-size: 11px; font-family: 'Georgia', serif; border: 1px solid #d4af37; opacity: 0; transition: opacity 0.3s; z-index: 9999; pointer-events: none; }
+        .sync-status.show { opacity: 1; }
         @media (max-width: 700px) {
             .content { padding: 15px; }
-
-            .stats-grid {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 6px;
-                margin: 15px 0;
-            }
-
-            .stat-box {
-                padding: 4px 2px;
-                border-radius: 8px;
-                min-width: 0;
-            }
-
-            .stat-box label {
-                font-size: 9px;
-                letter-spacing: -0.3px;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-            }
-
-            .stat-box input {
-                width: 50px;
-                font-size: 16px;
-                padding: 2px;
-                margin: 2px auto 0;
-            }
-
-            .stat-box .mod {
-                font-size: 8px;
-                margin-top: 1px;
-            }
-
-            .form-row {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .form-row label {
-                margin-bottom: 5px;
-            }
-
-            .skills-grid {
-                grid-template-columns: 1fr;
-            }
-
+            .stats-grid { grid-template-columns: repeat(3, 1fr); gap: 6px; margin: 15px 0; }
+            .stat-box { padding: 4px 2px; border-radius: 8px; min-width: 0; }
+            .stat-box label { font-size: 9px; letter-spacing: -0.3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+            .stat-box input { width: 50px; font-size: 16px; padding: 2px; margin: 2px auto 0; }
+            .stat-box .mod { font-size: 8px; margin-top: 1px; }
+            .form-row { flex-direction: column; align-items: flex-start; }
+            .form-row label { margin-bottom: 5px; }
+            .skills-grid { grid-template-columns: 1fr; }
             audio { width: 100%; }
-
             .tabs { justify-content: center; }
-
             .skill-item { flex-wrap: wrap; }
-
             .skill-item label { width: 100%; }
-
-            .form-row input,
-            .form-row textarea,
-            .skill-item input,
-            .stats-top input,
-            .stat-box input,
-            .sheet-card textarea {
-                max-width: 100%;
-                width: 100%;
-            }
-
-            .stats-top .stat-block input {
-                width: 70px;
-            }
+            .form-row input, .form-row textarea, .skill-item input, .stats-top input, .stat-box input, .sheet-card textarea { max-width: 100%; width: 100%; }
+            .stats-top .stat-block input { width: 70px; }
         }
     </style>
 </head>
@@ -519,193 +104,102 @@
     // ========================================
     // CONFIGURAZIONE
     // ========================================
+    const URL_BACKUP = "https://script.google.com/macros/s/AKfycbwdicnr7glb8tl8WbKQkmbKHslNs7umhOa236lNqCg_2-4fazgXEBtqFo09VcWQzpFDHw/exec";
 
-const URL_BACKUP = "https://script.google.com/macros/s/AKfycbwdicnr7glb8tl8WbKQkmbKHslNs7umhOa236lNqCg_2-4fazgXEBtqFo09VcWQzpFDHw/exec";
+    // Legge l'UID del tag NFC dall'URL (?uid=XXXX)
+    const urlParams = new URLSearchParams(window.location.search);
+    const TAG_UID = urlParams.get('uid');
+    const ID_MINIATURA = TAG_UID ? `nfc_${TAG_UID}` : "personaggio_001";
 
-// ==========================================
-// LEGGI L'UID DAL TAG NFC (dall'URL)
-// ==========================================
-// Il tag NFC genera URL tipo: https://.../miniature-dnd/?uid=04A23BC1D52A80
-// Qui leggiamo quel valore e lo usiamo come chiave univoca
-const urlParams = new URLSearchParams(window.location.search);
-const TAG_UID = urlParams.get('uid');
+    console.log("🆔 ID personaggio:", ID_MINIATURA, "(UID tag:", TAG_UID || "nessuno", ")");
 
-// Se c'è un UID, usa quello come ID personaggio (univoco per tag)
-// Altrimenti fallback a "personaggio_001" per accesso diretto senza NFC
-const ID_MINIATURA = TAG_UID ? `nfc_${TAG_UID}` : "personaggio_001";
+    const FILE_IMMAGINE_PG = "immagine.jpg";
+    const FILE_AUDIO_ITA = "audio-ita.mp3";
+    const FILE_AUDIO_ENG = "audio-eng.mp3";
 
-console.log("🆔 ID personaggio:", ID_MINIATURA, "(UID tag:", TAG_UID || "nessuno", ")");
+    // ========================================
+    // STATO GLOBALE
+    // ========================================
+    let dati = {};
+    let linguaCorrente = "it";
+    let sincronizzazioneInCorso = false;
 
-const FILE_IMMAGINE_PG = "immagine.jpg";
-const FILE_AUDIO_ITA = "audio-ita.mp3";
-const FILE_AUDIO_ENG = "audio-eng.mp3";
     // ========================================
     // TRADUZIONI
     // ========================================
     const labels = {
         it: {
-            tab_combat: "⚔️ COMBATTIMENTO",
-            tab_spells: "🔮 INCANTESIMI",
-            tab_inventory: "🎒 EQUIPAGGIAMENTO",
-            tab_features: "✨ TRATTI",
-            tab_notes: "📝 NOTE & LORE",
-            title_caratteristiche: "⭐ CARATTERISTICHE",
-            title_tiro_salvezza: "🛡️ TIRO SALVEZZA",
-            title_competenze: "🎯 COMPETENZE",
-            title_incantesimi: "🔮 INCANTESIMI",
-            title_equipaggiamento: "🎒 EQUIPAGGIAMENTO",
-            title_tratti_razziali: "✨ TRATTI RAZZIALI",
-            title_privilegi_classe: "⚙️ PRIVILEGI DI CLASSE",
-            title_talenti: "🏆 TALENTI",
-            title_note: "📝 NOTE",
-            title_lore: "📖 LORE / STORIA",
-            label_ca: "Classe Armatura (CA)",
-            label_pf: "Punti Ferita",
-            label_pf_attuali: "PF Attuali",
-            label_iniziativa: "Iniziativa",
-            label_velocita: "Velocità",
-            label_nome: "Nome:",
-            label_classe: "Classe:",
-            label_livello: "Livello:",
-            label_razza: "Razza:",
-            label_background: "Background:",
-            label_allineamento: "Allineamento:",
-            stat_forza: "FORZA",
-            stat_destrezza: "DESTREZZA",
-            stat_costituzione: "COSTITUZIONE",
-            stat_intelligenza: "INTELLIGENZA",
-            stat_saggezza: "SAGGEZZA",
-            stat_carisma: "CARISMA",
-            ts_forza: "FORZA",
-            ts_destrezza: "DESTREZZA",
-            ts_costituzione: "COSTITUZIONE",
-            ts_intelligenza: "INTELLIGENZA",
-            ts_saggezza: "SAGGEZZA",
-            ts_carisma: "CARISMA",
-            skill_acrobazia: "Acrobazia (Des)",
-            skill_atletica: "Atletica (For)",
-            skill_furtivita: "Furtività (Des)",
-            skill_percezione: "Percezione (Sag)",
-            skill_sopravvivenza: "Sopravvivenza (Sag)",
-            skill_arcano: "Arcano (Int)",
-            skill_indagare: "Indagare (Int)",
-            skill_intuizione: "Intuizione (Sag)",
-            skill_intimidire: "Intimidire (Car)",
-            skill_persuasione: "Persuasione (Car)",
-            skill_religione: "Religione (Int)",
-            label_cd_ts: "CD Tiro Salvezza:",
-            label_bonus_attacco: "Bonus Attacco:",
-            placeholder_incantesimi: "Lista incantesimi e trucchetti...",
-            placeholder_equip: "Armi, armature, oggetti, monete...",
-            btn_modifica_lore: "✏️ Modifica Lore",
-            btn_salva_lore: "💾 Salva Lore"
+            tab_combat: "⚔️ COMBATTIMENTO", tab_spells: "🔮 INCANTESIMI", tab_inventory: "🎒 EQUIPAGGIAMENTO", tab_features: "✨ TRATTI", tab_notes: "📝 NOTE & LORE",
+            title_caratteristiche: "⭐ CARATTERISTICHE", title_tiro_salvezza: "🛡️ TIRO SALVEZZA", title_competenze: "🎯 COMPETENZE",
+            title_incantesimi: "🔮 INCANTESIMI", title_equipaggiamento: "🎒 EQUIPAGGIAMENTO",
+            title_tratti_razziali: "✨ TRATTI RAZZIALI", title_privilegi_classe: "⚙️ PRIVILEGI DI CLASSE", title_talenti: "🏆 TALENTI",
+            title_note: "📝 NOTE", title_lore: "📖 LORE / STORIA",
+            label_ca: "Classe Armatura (CA)", label_pf: "Punti Ferita", label_pf_attuali: "PF Attuali", label_iniziativa: "Iniziativa", label_velocita: "Velocità",
+            label_nome: "Nome:", label_classe: "Classe:", label_livello: "Livello:", label_razza: "Razza:", label_background: "Background:", label_allineamento: "Allineamento:",
+            stat_forza: "FORZA", stat_destrezza: "DESTREZZA", stat_costituzione: "COSTITUZIONE", stat_intelligenza: "INTELLIGENZA", stat_saggezza: "SAGGEZZA", stat_carisma: "CARISMA",
+            ts_forza: "FORZA", ts_destrezza: "DESTREZZA", ts_costituzione: "COSTITUZIONE", ts_intelligenza: "INTELLIGENZA", ts_saggezza: "SAGGEZZA", ts_carisma: "CARISMA",
+            skill_acrobazia: "Acrobazia (Des)", skill_atletica: "Atletica (For)", skill_furtivita: "Furtività (Des)", skill_percezione: "Percezione (Sag)", skill_sopravvivenza: "Sopravvivenza (Sag)", skill_arcano: "Arcano (Int)", skill_indagare: "Indagare (Int)", skill_intuizione: "Intuizione (Sag)", skill_intimidire: "Intimidire (Car)", skill_persuasione: "Persuasione (Car)", skill_religione: "Religione (Int)",
+            label_cd_ts: "CD Tiro Salvezza:", label_bonus_attacco: "Bonus Attacco:",
+            placeholder_incantesimi: "Lista incantesimi e trucchetti...", placeholder_equip: "Armi, armature, oggetti, monete...",
+            btn_modifica_lore: "✏️ Modifica Lore", btn_salva_lore: "💾 Salva Lore"
         },
         en: {
-            tab_combat: "⚔️ COMBAT",
-            tab_spells: "🔮 SPELLS",
-            tab_inventory: "🎒 INVENTORY",
-            tab_features: "✨ FEATURES",
-            tab_notes: "📝 NOTES & LORE",
-            title_caratteristiche: "⭐ ABILITY SCORES",
-            title_tiro_salvezza: "🛡️ SAVING THROWS",
-            title_competenze: "🎯 SKILLS",
-            title_incantesimi: "🔮 SPELLS",
-            title_equipaggiamento: "🎒 EQUIPMENT",
-            title_tratti_razziali: "✨ RACIAL TRAITS",
-            title_privilegi_classe: "⚙️ CLASS FEATURES",
-            title_talenti: "🏆 FEATS",
-            title_note: "📝 NOTES",
-            title_lore: "📖 LORE / STORY",
-            label_ca: "Armor Class (AC)",
-            label_pf: "Hit Points",
-            label_pf_attuali: "Current HP",
-            label_iniziativa: "Initiative",
-            label_velocita: "Speed",
-            label_nome: "Name:",
-            label_classe: "Class:",
-            label_livello: "Level:",
-            label_razza: "Race:",
-            label_allineamento: "Alignment:",
-            stat_forza: "STRENGTH",
-            stat_destrezza: "DEXTERITY",
-            stat_costituzione: "CONSTITUTION",
-            stat_intelligenza: "INTELLIGENCE",
-            stat_saggezza: "WISDOM",
-            stat_carisma: "CHARISMA",
-            ts_forza: "STR",
-            ts_destrezza: "DEX",
-            ts_costituzione: "CON",
-            ts_intelligenza: "INT",
-            ts_saggezza: "WIS",
-            ts_carisma: "CHA",
-            skill_acrobazia: "Acrobatics (Dex)",
-            skill_atletica: "Athletics (Str)",
-            skill_furtivita: "Stealth (Dex)",
-            skill_percezione: "Perception (Wis)",
-            skill_sopravvivenza: "Survival (Wis)",
-            skill_arcano: "Arcana (Int)",
-            skill_indagare: "Investigation (Int)",
-            skill_intuizione: "Insight (Wis)",
-            skill_intimidire: "Intimidation (Cha)",
-            skill_persuasione: "Persuasion (Cha)",
-            skill_religione: "Religion (Int)",
-            label_cd_ts: "Spell Save DC:",
-            label_bonus_attacco: "Spell Attack Bonus:",
-            placeholder_incantesimi: "Spells and cantrips list...",
-            placeholder_equip: "Weapons, armor, items, coins...",
-            btn_modifica_lore: "✏️ Edit Lore",
-            btn_salva_lore: "💾 Save Lore"
+            tab_combat: "⚔️ COMBAT", tab_spells: "🔮 SPELLS", tab_inventory: "🎒 INVENTORY", tab_features: "✨ FEATURES", tab_notes: "📝 NOTES & LORE",
+            title_caratteristiche: "⭐ ABILITY SCORES", title_tiro_salvezza: "🛡️ SAVING THROWS", title_competenze: "🎯 SKILLS",
+            title_incantesimi: "🔮 SPELLS", title_equipaggiamento: "🎒 EQUIPMENT",
+            title_tratti_razziali: "✨ RACIAL TRAITS", title_privilegi_classe: "⚙️ CLASS FEATURES", title_talenti: "🏆 FEATS",
+            title_note: "📝 NOTES", title_lore: "📖 LORE / STORY",
+            label_ca: "Armor Class (AC)", label_pf: "Hit Points", label_pf_attuali: "Current HP", label_iniziativa: "Initiative", label_velocita: "Speed",
+            label_nome: "Name:", label_classe: "Class:", label_livello: "Level:", label_razza: "Race:", label_allineamento: "Alignment:",
+            stat_forza: "STRENGTH", stat_destrezza: "DEXTERITY", stat_costituzione: "CONSTITUTION", stat_intelligenza: "INTELLIGENCE", stat_saggezza: "WISDOM", stat_carisma: "CHARISMA",
+            ts_forza: "STR", ts_destrezza: "DEX", ts_costituzione: "CON", ts_intelligenza: "INT", ts_saggezza: "WIS", ts_carisma: "CHA",
+            skill_acrobazia: "Acrobatics (Dex)", skill_atletica: "Athletics (Str)", skill_furtivita: "Stealth (Dex)", skill_percezione: "Perception (Wis)", skill_sopravvivenza: "Survival (Wis)", skill_arcano: "Arcana (Int)", skill_indagare: "Investigation (Int)", skill_intuizione: "Insight (Wis)", skill_intimidire: "Intimidation (Cha)", skill_persuasione: "Persuasion (Cha)", skill_religione: "Religion (Int)",
+            label_cd_ts: "Spell Save DC:", label_bonus_attacco: "Spell Attack Bonus:",
+            placeholder_incantesimi: "Spells and cantrips list...", placeholder_equip: "Weapons, armor, items, coins...",
+            btn_modifica_lore: "✏️ Edit Lore", btn_salva_lore: "💾 Save Lore"
         }
     };
 
-    // DATI STANDARD
+    // ========================================
+    // DATI STANDARD - SCHEDA BASE MORGHUL
+    // ========================================
     const DATI_STANDARD = {
-    lingua: "it",
-    nome_pg: "Morghul",
-    classe_pg: "Non morto",
-    razza_pg: "Demone scheletro",
-    livello_pg: "1",
-    allineamento: "Caotico Malvagio",
-    esperienza: "0",
-    forza: "26",
-    destrezza: "14",
-    costituzione: "26",
-    intelligenza: "16",
-    saggezza: "18",
-    carisma: "22",
-    pf_totali: "367",
-    pf_attuali: "367",
-    ca: "20",
-    iniziativa: "+2",
-    velocita: "12",
-    ts_forza: "8",
-    ts_destrezza: "2",
-    ts_costituzione: "8",
-    ts_intelligenza: "3",
-    ts_saggezza: "4",
-    ts_carisma: "6",
-    acrobazia: "+2",
-    atletica: "+8",
-    furtivita: "+2",
-    percezione: "+4",
-    sopravvivenza: "+4",
-    arcano: "+3",
-    indagare: "+3",
-    intuizione: "+4",
-    intimidire: "+6",
-    persuasione: "+6",
-    religione: "+3",
-    cd_ts: "",
-    bonus_attacco: "",
-    incantesimi: "",
-    equipaggiamento: "ARMI:\n• Tracollosso (Spadone Leggendario) — +15 a colpire, portata 4,5m\n  4d10+8 taglienti + 4d8 necrotici (media 32+18)\n  Se riduce a 0 PF, la vittima si rialza come Spezzato sotto il suo controllo\n• Scaglia Catena — +15 a colpire, gittata 18/36m\n  4d8+8 contundenti + tira il bersaglio 9m verso di sé, TS For CD 23 o Prono\n\nARMATURA:\n• Armatura d'Ossa Abissale — CA 20\n• Corna spezzate (simbolo del suo status)\n• Costole legate da catene arrugginite\n\nOGGETTI ICONICI:\n• Frammento della Sesta Catena (Amuleto Leggendario)\n  → 1/giorno: spezza un effetto di charme o comando su di te\n  → Maledizione: non puoi mai rimangiarti una promessa fatta mentre lo indossi\n• Le otto catene rimanenti (obiettivo della sua vendetta)\n• Anelli di anime uccise (ogni vittima = un anello della sua catena)\n\nTESORO:\n• Ricchezze della Cittadella delle Ossa Frante\n  (dungeon verticale in una voragine abissale, GS 21 → tesoro da migliaia di mo)",
-    tratti_razziali: "NON-MORTO ENORME (Demone-Scheletro)\n• Scurovisione 36m\n• Percezione Passiva 21\n• Velocità 12m\n• Immunità a Veleno e Fuoco\n• Immunità a condizioni: Avvelenato, Esausto, Spaventato, Paralizzato\n• Resistenze: Freddo, Fulmine, Necrotico;\n  Contundente, Perforante, Tagliente da armi non magiche\n• Linguaggi: Abissale, Comune, Infernale, Telepatia 36m\n• Non respira, non mangia, non dorme\n• Il suo vero nome è Vraekzar (secreto)",
-    privilegi_classe: "TRATTI SPECIALI:\n• Aura di Disperazione: creature ostili entro 9m hanno svantaggio ai TS\n  contro paura e non possono recuperare PF. Se iniziano il turno lì,\n  TS Sag CD 21 o 1 livello di Esaurimento.\n• Resistenza Leggendaria (3/giorno): supera un TS fallito.\n• Catene dello Spezzato: ignora resistenza ai danni contundenti.\n  Quando colpisce, il bersaglio TS For CD 23 o Trattenuto dalle catene\n  spettrali fino alla fine del suo prossimo turno.\n• Frattura dell'Anima (Ricarica 5-6): la prima volta che scende sotto 150 PF,\n  onda d'urto — tutti entro 18m TS Cos CD 21, 10d10 necrotici (metà se superato),\n  e Morghul recupera 50 PF.\n\nAZIONI:\n• Attacchi Multipli: 3 attacchi con Tracollosso.\n• Tracollosso (vedi Equipaggiamento).\n• Scaglia Catena (vedi Equipaggiamento).\n\nAZIONI LEGGENDARIE (3/Turno):\n• Attacco: 1 attacco con Tracollosso.\n• Movimento Infranto (2 Azioni): teletrasporto 18m in una nuvola di schegge\n  d'osso; creature entro 1,5m da partenza/arrivo TS Des CD 21 o 16 taglienti.\n• Urlo del Tradito (3 Azioni): creature a scelta entro 18m TS Sag CD 21\n  o Spaventate per 1 minuto (ripetibile a fine turno).\n\nREAZIONI:\n• Contraccolpo di Catene: se colpito in mischia, attacco Scaglia Catena\n  contro l'attaccante.\n\nAZIONI DA TANA (Cittadella delle Ossa Frante, Init 20):\n1. Pavimento di ossa: area 6m, TS Des CD 21 o 22 perforanti + Prono.\n2. Spiriti di giuramenti infranti: TS Sag CD 21 o il bersaglio usa\n   la reazione per attaccare l'alleato più vicino.\n3. Catena gigante: TS For CD 21 o 27 contundenti + spinto 6m.",
-    talenti: "• Maestro d'Armi Possenti (Great Weapon Master): -5 a colpire, +10 danni\n• Iniziativa Superiore: +5 iniziativa (opzionale)\n• Resistente (Costituzione): +1 Cos e vantaggio ai TS su Cos\n• Incantatore da Guerra (Warcaster): vantaggio ai TS di concentrazione\n• Colpo Possente: danni extra con armi a due mani",
-    note: "Note personali...",
-    lore_ita: "MORGHUL LO SPEZZATO — IL RE CADUTO DELLE CATENE INFRANTE\n\nNon nacque scheletro. Era Morghul Vraekzar, Primo Generale del Signore Balor Zaer'kul e campione della Guerra del Sangue. Per millenni guidò legioni demoniache contro i diavoli, legato a Zaer'kul dal Patto delle Nove Catene: nove giuramenti incisi sulla sua carne che lo rendevano invincibile finché fosse rimasto leale.\n\nDurante l'Assedio di Avernus, Morghul scoprì che Zaer'kul sacrificava interi battaglioni demoniaci in patti segreti con Asmodeus. Considerandolo un disonore, Morghul spezzò la Sesta Catena — \"Non alzerò mai l'arma contro il mio Signore\" — e sfidò Zaer'kul.\n\nZaer'kul non lo uccise. Peggio. Evocò le altre otto catene e le usò per strappargli anima, carne e nome, scagliandolo nell'Abisso più profondo: il Pozzo delle Cose Dimenticate. Lì, per 900 anni, il nulla corrose ogni cosa tranne la sua rabbia e il frammento della Sesta Catena ancora fuso alle sue ossa.\n\nQuando ne emerse, era Morghul lo Spezzato: uno scheletro demoniaco alto 3 metri, con corna spezzate, costole legate da catene arrugginite e occhi che bruciano di fuoco verde. La sua pelle è cenere, la sua voce è il suono di ossa che si frantumano.\n\nDal Pozzo portò con sé Tracollosso, uno spadone forgiato dal suo stesso rancore. Ogni anima uccisa diventa un anello della sua nuova catena, che trascina dietro di sé. Ora governa la Cittadella delle Ossa Frante, dungeon verticale costruito in una voragine abissale. Chi muore lì si rialza come \"Spezzato\" sotto il suo comando.\n\nMorghul non vuole conquistare. Vuole spezzare. Vuole trovare Zaer'kul, frantumare le otto catene rimanenti e usare quel potere per distruggere il concetto stesso di giuramento nei Piani. Se ci riuscisse, nessun patto, divino o infernale, reggerebbe più.\n\nPUNTI DEBOLI NARRATIVI:\n1. La Sesta Catena nel suo petto: se colpita, ricorda il tradimento e lo manda in Furia Cieca per 1 round, ma poi lo stordisce.\n2. Odia la pietà: offrirgli misericordia è l'insulto che lo fa perdere il controllo.\n3. Il vero nome Vraekzar, se pronunciato da chi ha impugnato Tracollosso, lo costringe a dire una verità.",
-    lore_eng: "Write your character's story here."
-};
+        lingua: "it", nome_pg: "Morghul", classe_pg: "Non morto", razza_pg: "Demone scheletro", livello_pg: "1",
+        allineamento: "Caotico Malvagio", esperienza: "0",
+        forza: "26", destrezza: "14", costituzione: "26", intelligenza: "16", saggezza: "18", carisma: "22",
+        pf_totali: "367", pf_attuali: "367", ca: "20", iniziativa: "+2", velocita: "12",
+        ts_forza: "8", ts_destrezza: "2", ts_costituzione: "8", ts_intelligenza: "3", ts_saggezza: "4", ts_carisma: "6",
+        acrobazia: "+2", atletica: "+8", furtivita: "+2", percezione: "+4", sopravvivenza: "+4", arcano: "+3",
+        indagare: "+3", intuizione: "+4", intimidire: "+6", persuasione: "+6", religione: "+3",
+        cd_ts: "", bonus_attacco: "", incantesimi: "",
+        equipaggiamento: "ARMI:\n• Tracollosso (Spadone Leggendario) — +15 a colpire, portata 4,5m\n  4d10+8 taglienti + 4d8 necrotici\n• Scaglia Catena — +15 a colpire, gittata 18/36m\n  4d8+8 contundenti + tira il bersaglio 9m verso di sé, TS For CD 23 o Prono\n\nARMATURA:\n• Armatura d'Ossa Abissale — CA 20\n• Corna spezzate, costole legate da catene\n\nOGGETTI ICONICI:\n• Frammento della Sesta Catena (Amuleto Leggendario)\n  → 1/giorno: spezza un effetto di charme o comando\n  → Maledizione: non puoi rimangiarti una promessa fatta mentre lo indossi\n• Le otto catene rimanenti\n• Anelli di anime uccise",
+        tratti_razziali: "NON-MORTO ENORME (Demone-Scheletro)\n• Scurovisione 36m\n• Percezione Passiva 21\n• Velocità 12m\n• Immunità a Veleno e Fuoco\n• Immunità a: Avvelenato, Esausto, Spaventato, Paralizzato\n• Resistenze: Freddo, Fulmine, Necrotico, Contundente/Perforante/Tagliente da armi non magiche\n• Linguaggi: Abissale, Comune, Infernale, Telepatia 36m\n• Non respira, non mangia, non dorme\n• Vero nome: Vraekzar (segreto)",
+        privilegi_classe: "TRATTI SPECIALI:\n• Aura di Disperazione: creature ostili entro 9m svantaggio TS paura, non recuperano PF\n• Resistenza Leggendaria (3/giorno)\n• Catene dello Spezzato: ignora resistenza contundenti; TS For CD 23 o Trattenuto\n• Frattura dell'Anima (Ricarica 5-6): sotto 150 PF onda d'urto 10d10 necrotici, recupera 50 PF\n\nAZIONI:\n• Attacchi Multipli: 3 con Tracollosso\n• Tracollosso, Scaglia Catena\n\nAZIONI LEGGENDARIE (3/Turno):\n• Attacco, Movimento Infranto, Urlo del Tradito\n\nREAZIONI:\n• Contraccolpo di Catene\n\nAZIONI DA TANA (Init 20):\n1. Pavimento di ossa\n2. Spiriti di giuramenti infranti\n3. Catena gigante",
+        talenti: "• Maestro d'Armi Possenti (Great Weapon Master): -5 a colpire, +10 danni\n• Iniziativa Superiore: +5 iniziativa\n• Resistente (Costituzione): +1 Cos, vantaggio TS Cos\n• Incantatore da Guerra (Warcaster)\n• Colpo Possente: danni extra armi a due mani",
+        note: "Note personali...",
+        lore_ita: "MORGHUL LO SPEZZATO — IL RE CADUTO DELLE CATENE INFRANTE\n\nMorghul Vraekzar, Primo Generale del Signore Balor Zaer'kul, campione della Guerra del Sangue. Legato dal Patto delle Nove Catene: nove giuramenti incisi sulla carne.\n\nScoperto il tradimento di Zaer'kul (patti segreti con Asmodeus), Morghul spezzò la Sesta Catena e lo sfidò. Zaer'kul lo punì strappandogli anima, carne e nome, gettandolo nel Pozzo delle Cose Dimenticate per 900 anni.\n\nNe uscì come Morghul lo Spezzato: scheletro demone alto 3m, corna spezzate, occhi di fuoco verde. Portò con sé Tracollosso, spadone forgiato dal rancore. Ogni anima uccisa diventa un anello della sua catena.\n\nGoverna la Cittadella delle Ossa Frante. Vuole spezzare le otto catene rimanenti per distruggere il concetto di giuramento nei Piani.\n\nPUNTI DEBOLI:\n1. Sesta Catena nel petto → Furia Cieca 1 round, poi stordito\n2. Odia la pietà: offrirla lo fa perdere il controllo\n3. Vero nome Vraekzar: se pronunciato da chi ha impugnato Tracollosso, lo costringe a dire una verità.",
+        lore_eng: "Write your character's story here."
+    };
+
+    // ========================================
+    // CALCOLO MODIFICATORE (D&D 5e)
+    // ========================================
+    function calcolaMod(punteggio) {
+        const val = parseInt(punteggio, 10);
+        if (isNaN(val)) return 0;
+        return Math.floor((val - 10) / 2);
+    }
+
+    // ========================================
+    // INDICATORE DI STATO
+    // ========================================
+    function mostraStato(testo, durata = 1500) {
+        const el = document.getElementById("sync-status");
+        if (!el) return;
+        el.textContent = testo;
+        el.classList.add("show");
+        setTimeout(() => el.classList.remove("show"), durata);
+    }
 
     // ========================================
     // JSONP
@@ -806,14 +300,7 @@ const FILE_AUDIO_ENG = "audio-eng.mp3";
     }
 
     function aggiornaModificatori() {
-        const mappa = {
-            forza: 'mod-forza',
-            destrezza: 'mod-destrezza',
-            costituzione: 'mod-costituzione',
-            intelligenza: 'mod-intelligenza',
-            saggezza: 'mod-saggezza',
-            carisma: 'mod-carisma'
-        };
+        const mappa = { forza: 'mod-forza', destrezza: 'mod-destrezza', costituzione: 'mod-costituzione', intelligenza: 'mod-intelligenza', saggezza: 'mod-saggezza', carisma: 'mod-carisma' };
         for (const [campo, idEl] of Object.entries(mappa)) {
             const el = document.getElementById(idEl);
             if (el) {
@@ -847,10 +334,7 @@ const FILE_AUDIO_ENG = "audio-eng.mp3";
         const loreTesto = document.getElementById("lore-testo");
         const btnMod = document.getElementById("btn-modifica-lore");
         const btnSalva = document.getElementById("btn-salva-lore");
-        if (textarea) {
-            textarea.value = testo;
-            textarea.style.display = "block";
-        }
+        if (textarea) { textarea.value = testo; textarea.style.display = "block"; }
         if (loreTesto) loreTesto.style.display = "none";
         if (btnMod) btnMod.style.display = "none";
         if (btnSalva) btnSalva.style.display = "inline-block";
@@ -860,11 +344,7 @@ const FILE_AUDIO_ENG = "audio-eng.mp3";
         const textarea = document.getElementById("lore-textarea");
         if (!textarea) return;
         const nuovo = textarea.value;
-        if (linguaCorrente === "it") {
-            dati.lore_ita = nuovo;
-        } else {
-            dati.lore_eng = nuovo;
-        }
+        if (linguaCorrente === "it") { dati.lore_ita = nuovo; } else { dati.lore_eng = nuovo; }
         salvaTutto();
         disegnaPagina();
     }
@@ -898,9 +378,7 @@ const FILE_AUDIO_ENG = "audio-eng.mp3";
                 <div class="char-img">
                     <img src="${FILE_IMMAGINE_PG}" alt="Personaggio" onerror="this.src='https://via.placeholder.com/140?text=No+Image'">
                 </div>
-                <audio controls>
-                    <source src="${linguaCorrente === "it" ? FILE_AUDIO_ITA : FILE_AUDIO_ENG}" type="audio/mpeg">
-                </audio>
+                <audio controls><source src="${linguaCorrente === "it" ? FILE_AUDIO_ITA : FILE_AUDIO_ENG}" type="audio/mpeg"></audio>
             </div>
 
             <div class="stats-top">
@@ -933,36 +411,12 @@ const FILE_AUDIO_ENG = "audio-eng.mp3";
                 <div class="sheet-card">
                     <h3>${L.title_caratteristiche}</h3>
                     <div class="stats-grid">
-                        <div class="stat-box">
-                            <label>${L.stat_forza}</label>
-                            <input type="number" value="${escapeHtml(dati.forza)}" oninput="salvaCaratteristica('forza', this.value)">
-                            <div class="mod" id="mod-forza">(${modForza >= 0 ? '+' : ''}${modForza})</div>
-                        </div>
-                        <div class="stat-box">
-                            <label>${L.stat_destrezza}</label>
-                            <input type="number" value="${escapeHtml(dati.destrezza)}" oninput="salvaCaratteristica('destrezza', this.value)">
-                            <div class="mod" id="mod-destrezza">(${modDes >= 0 ? '+' : ''}${modDes})</div>
-                        </div>
-                        <div class="stat-box">
-                            <label>${L.stat_costituzione}</label>
-                            <input type="number" value="${escapeHtml(dati.costituzione)}" oninput="salvaCaratteristica('costituzione', this.value)">
-                            <div class="mod" id="mod-costituzione">(${modCos >= 0 ? '+' : ''}${modCos})</div>
-                        </div>
-                        <div class="stat-box">
-                            <label>${L.stat_intelligenza}</label>
-                            <input type="number" value="${escapeHtml(dati.intelligenza)}" oninput="salvaCaratteristica('intelligenza', this.value)">
-                            <div class="mod" id="mod-intelligenza">(${modInt >= 0 ? '+' : ''}${modInt})</div>
-                        </div>
-                        <div class="stat-box">
-                            <label>${L.stat_saggezza}</label>
-                            <input type="number" value="${escapeHtml(dati.saggezza)}" oninput="salvaCaratteristica('saggezza', this.value)">
-                            <div class="mod" id="mod-saggezza">(${modSag >= 0 ? '+' : ''}${modSag})</div>
-                        </div>
-                        <div class="stat-box">
-                            <label>${L.stat_carisma}</label>
-                            <input type="number" value="${escapeHtml(dati.carisma)}" oninput="salvaCaratteristica('carisma', this.value)">
-                            <div class="mod" id="mod-carisma">(${modCar >= 0 ? '+' : ''}${modCar})</div>
-                        </div>
+                        <div class="stat-box"><label>${L.stat_forza}</label><input type="number" value="${escapeHtml(dati.forza)}" oninput="salvaCaratteristica('forza', this.value)"><div class="mod" id="mod-forza">(${modForza >= 0 ? '+' : ''}${modForza})</div></div>
+                        <div class="stat-box"><label>${L.stat_destrezza}</label><input type="number" value="${escapeHtml(dati.destrezza)}" oninput="salvaCaratteristica('destrezza', this.value)"><div class="mod" id="mod-destrezza">(${modDes >= 0 ? '+' : ''}${modDes})</div></div>
+                        <div class="stat-box"><label>${L.stat_costituzione}</label><input type="number" value="${escapeHtml(dati.costituzione)}" oninput="salvaCaratteristica('costituzione', this.value)"><div class="mod" id="mod-costituzione">(${modCos >= 0 ? '+' : ''}${modCos})</div></div>
+                        <div class="stat-box"><label>${L.stat_intelligenza}</label><input type="number" value="${escapeHtml(dati.intelligenza)}" oninput="salvaCaratteristica('intelligenza', this.value)"><div class="mod" id="mod-intelligenza">(${modInt >= 0 ? '+' : ''}${modInt})</div></div>
+                        <div class="stat-box"><label>${L.stat_saggezza}</label><input type="number" value="${escapeHtml(dati.saggezza)}" oninput="salvaCaratteristica('saggezza', this.value)"><div class="mod" id="mod-saggezza">(${modSag >= 0 ? '+' : ''}${modSag})</div></div>
+                        <div class="stat-box"><label>${L.stat_carisma}</label><input type="number" value="${escapeHtml(dati.carisma)}" oninput="salvaCaratteristica('carisma', this.value)"><div class="mod" id="mod-carisma">(${modCar >= 0 ? '+' : ''}${modCar})</div></div>
                     </div>
                 </div>
 
@@ -1013,26 +467,13 @@ const FILE_AUDIO_ENG = "audio-eng.mp3";
             </div>
 
             <div id="tab-features" class="tab-pane">
-                <div class="sheet-card">
-                    <h3>${L.title_tratti_razziali}</h3>
-                    <textarea rows="3" onchange="salvaCampo('tratti_razziali', this.value)">${escapeHtml(dati.tratti_razziali)}</textarea>
-                </div>
-                <div class="sheet-card">
-                    <h3>${L.title_privilegi_classe}</h3>
-                    <textarea rows="3" onchange="salvaCampo('privilegi_classe', this.value)">${escapeHtml(dati.privilegi_classe)}</textarea>
-                </div>
-                <div class="sheet-card">
-                    <h3>${L.title_talenti}</h3>
-                    <textarea rows="3" onchange="salvaCampo('talenti', this.value)">${escapeHtml(dati.talenti)}</textarea>
-                </div>
+                <div class="sheet-card"><h3>${L.title_tratti_razziali}</h3><textarea rows="3" onchange="salvaCampo('tratti_razziali', this.value)">${escapeHtml(dati.tratti_razziali)}</textarea></div>
+                <div class="sheet-card"><h3>${L.title_privilegi_classe}</h3><textarea rows="3" onchange="salvaCampo('privilegi_classe', this.value)">${escapeHtml(dati.privilegi_classe)}</textarea></div>
+                <div class="sheet-card"><h3>${L.title_talenti}</h3><textarea rows="3" onchange="salvaCampo('talenti', this.value)">${escapeHtml(dati.talenti)}</textarea></div>
             </div>
 
             <div id="tab-notes" class="tab-pane">
-                <div class="sheet-card">
-                    <h3>${L.title_note}</h3>
-                    <textarea rows="4" onchange="salvaCampo('note', this.value)">${escapeHtml(dati.note)}</textarea>
-                </div>
-
+                <div class="sheet-card"><h3>${L.title_note}</h3><textarea rows="4" onchange="salvaCampo('note', this.value)">${escapeHtml(dati.note)}</textarea></div>
                 <div class="sheet-card">
                     <h3>${L.title_lore}</h3>
                     <div class="lore-box">
@@ -1057,18 +498,16 @@ const FILE_AUDIO_ENG = "audio-eng.mp3";
     }
 
     // ========================================
-    // CARICAMENTO CON SINCRONIZZAZIONE
+    // CARICAMENTO
     // ========================================
     async function caricaDati() {
         try {
             console.log("🔄 Avvio caricamento...");
 
-            // 1. Leggi il locale PRIMA (istantaneo, no rete)
             const localiRaw = localStorage.getItem(`pg_${ID_MINIATURA}`);
             const datiLocali = localiRaw ? JSON.parse(localiRaw) : null;
             console.log("💾 Locale presente:", datiLocali ? "SÌ" : "NO");
 
-            // 2. Se il locale ha dati validi, disegna SUBITO
             if (datiLocali && Object.keys(datiLocali).length > 5) {
                 dati = datiLocali;
                 linguaCorrente = dati.lingua || "it";
@@ -1076,28 +515,19 @@ const FILE_AUDIO_ENG = "audio-eng.mp3";
                 console.log("✅ Disegnato subito dal LOCALE");
             }
 
-            // 3. Chiedi al server in background
             let backup = null;
             try {
                 backup = await Promise.race([
                     recuperaBackup(),
                     new Promise(resolve => setTimeout(() => resolve("TIMEOUT"), 8000))
                 ]);
-                if (backup === "TIMEOUT") {
-                    console.warn("⚠️ Timeout nel recupero del backup");
-                    backup = null;
-                }
-            } catch (err) {
-                console.warn("⚠️ Errore nel recupero del backup:", err);
-                backup = null;
-            }
+                if (backup === "TIMEOUT") { console.warn("⚠️ Timeout backup"); backup = null; }
+            } catch (err) { console.warn("⚠️ Errore backup:", err); backup = null; }
             console.log("📥 Backup ricevuto:", backup ? "SÌ" : "NO");
 
-            // 4. Aggiorna solo se il backup è più recente
             if (backup) {
                 const t_backup = backup._ultimaModifica || 0;
                 const t_locale = datiLocali ? (datiLocali._ultimaModifica || 0) : 0;
-
                 if (!datiLocali || t_backup > t_locale) {
                     dati = backup;
                     linguaCorrente = dati.lingua || "it";
@@ -1105,37 +535,27 @@ const FILE_AUDIO_ENG = "audio-eng.mp3";
                     disegnaPagina();
                     console.log("🔄 Aggiornato dal BACKUP");
                 } else {
-                    console.log("✅ Backup non più recente, mantengo il locale");
+                    console.log("✅ Backup non più recente");
                 }
-} else if (!datiLocali) {
-    // Nessun locale E nessun backup: nuovo tag NFC alla prima apertura
-    // Carica la scheda base di Morghul e la salva subito sul server
-    // per questo UID specifico (così ogni acquirente ha la sua copia)
-    console.log("🆕 Prima apertura per questo tag: carico scheda base Morghul");
-    dati = JSON.parse(JSON.stringify(DATI_STANDARD));
-    linguaCorrente = "it";
-    disegnaPagina();
-    await salvaBackup();
-    console.log("✅ Scheda base Morghul salvata per:", ID_MINIATURA);
-}
-
+            } else if (!datiLocali) {
+                console.log("🆕 Prima apertura: carico scheda base Morghul");
+                dati = JSON.parse(JSON.stringify(DATI_STANDARD));
+                linguaCorrente = "it";
+                disegnaPagina();
+                await salvaBackup();
+                console.log("✅ Scheda base salvata per:", ID_MINIATURA);
+            }
         } catch (e) {
             console.log("Errore caricamento:", e);
             const contenuto = document.getElementById("contenuto");
             if (contenuto) {
-                contenuto.innerHTML = `
-                    <div style="text-align:center; padding:60px; color:red;">
-                        ❌ Errore nel caricamento.<br>
-                        <small>${escapeHtml(String(e))}</small><br><br>
-                        <button onclick="location.reload()">Ricarica</button>
-                    </div>
-                `;
+                contenuto.innerHTML = `<div style="text-align:center; padding:60px; color:red;">❌ Errore nel caricamento.<br><small>${escapeHtml(String(e))}</small><br><br><button onclick="location.reload()">Ricarica</button></div>`;
             }
         }
     }
 
     // ========================================
-    // SINCRONIZZAZIONE AUTOMATICA AL RITORNO
+    // SYNC AUTOMATICO AL RITORNO
     // ========================================
     document.addEventListener('visibilitychange', async () => {
         if (document.visibilityState !== 'visible') return;
@@ -1155,11 +575,8 @@ const FILE_AUDIO_ENG = "audio-eng.mp3";
                     mostraStato("🔄 Sincronizzato dal server");
                 }
             }
-        } catch (e) {
-            console.warn("Errore sync:", e);
-        } finally {
-            sincronizzazioneInCorso = false;
-        }
+        } catch (e) { console.warn("Errore sync:", e); }
+        finally { sincronizzazioneInCorso = false; }
     });
 
     window.setLingua = setLingua;

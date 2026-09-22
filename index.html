@@ -660,76 +660,52 @@ const FILE_AUDIO_ENG = "audio-eng.mp3";
 
     // DATI STANDARD
     const DATI_STANDARD = {
-        lingua: "it",
-        nome_pg: "Nome",
-        classe_pg: "Classe",
-        razza_pg: "Razza",
-        livello_pg: "1",
-        allineamento: "Neutrale",
-        esperienza: "0",
-        forza: "10",
-        destrezza: "10",
-        costituzione: "10",
-        intelligenza: "10",
-        saggezza: "10",
-        carisma: "10",
-        pf_totali: "10",
-        pf_attuali: "10",
-        ca: "10",
-        iniziativa: "0",
-        velocita: "9",
-        ts_forza: "0",
-        ts_destrezza: "0",
-        ts_costituzione: "0",
-        ts_intelligenza: "0",
-        ts_saggezza: "0",
-        ts_carisma: "0",
-        acrobazia: "0",
-        atletica: "0",
-        furtivita: "0",
-        percezione: "0",
-        sopravvivenza: "0",
-        arcano: "0",
-        indagare: "0",
-        intuizione: "0",
-        intimidire: "0",
-        persuasione: "0",
-        religione: "0",
-        cd_ts: "",
-        bonus_attacco: "",
-        incantesimi: "",
-        equipaggiamento: "",
-        tratti_razziali: "Tratti razziali...",
-        privilegi_classe: "Privilegi di classe...",
-        talenti: "Talenti...",
-        note: "Note personali...",
-        lore_ita: "Scrivi qui la storia del tuo personaggio.",
-        lore_eng: "Write your character's story here."
-    };
-
-    let dati = {};
-    let linguaCorrente = "it";
-    let sincronizzazioneInCorso = false;
-
-    // ========================================
-    // CALCOLO MODIFICATORE (D&D 5e)
-    // ========================================
-    function calcolaMod(punteggio) {
-        const val = parseInt(punteggio, 10);
-        if (isNaN(val)) return 0;
-        return Math.floor((val - 10) / 2);
-    }
-
-    // ========================================
-    // INDICATORE DI STATO
-    // ========================================
-    function mostraStato(testo, durata = 1500) {
-        const el = document.getElementById("sync-status");
-        if (!el) return;
-        el.textContent = testo;
-        el.classList.add("show");
-        setTimeout(() => el.classList.remove("show"), durata);
-    }
+    lingua: "it",
+    nome_pg: "Morghul",
+    classe_pg: "Non morto",
+    razza_pg: "Demone scheletro",
+    livello_pg: "1",
+    allineamento: "Caotico Malvagio",
+    esperienza: "0",
+    forza: "26",
+    destrezza: "14",
+    costituzione: "26",
+    intelligenza: "16",
+    saggezza: "18",
+    carisma: "22",
+    pf_totali: "367",
+    pf_attuali: "367",
+    ca: "20",
+    iniziativa: "+2",
+    velocita: "12",
+    ts_forza: "8",
+    ts_destrezza: "2",
+    ts_costituzione: "8",
+    ts_intelligenza: "3",
+    ts_saggezza: "4",
+    ts_carisma: "6",
+    acrobazia: "+2",
+    atletica: "+8",
+    furtivita: "+2",
+    percezione: "+4",
+    sopravvivenza: "+4",
+    arcano: "+3",
+    indagare: "+3",
+    intuizione: "+4",
+    intimidire: "+6",
+    persuasione: "+6",
+    religione: "+3",
+    cd_ts: "",
+    bonus_attacco: "",
+    incantesimi: "",
+    equipaggiamento: "ARMI:\n• Tracollosso (Spadone Leggendario) — +15 a colpire, portata 4,5m\n  4d10+8 taglienti + 4d8 necrotici (media 32+18)\n  Se riduce a 0 PF, la vittima si rialza come Spezzato sotto il suo controllo\n• Scaglia Catena — +15 a colpire, gittata 18/36m\n  4d8+8 contundenti + tira il bersaglio 9m verso di sé, TS For CD 23 o Prono\n\nARMATURA:\n• Armatura d'Ossa Abissale — CA 20\n• Corna spezzate (simbolo del suo status)\n• Costole legate da catene arrugginite\n\nOGGETTI ICONICI:\n• Frammento della Sesta Catena (Amuleto Leggendario)\n  → 1/giorno: spezza un effetto di charme o comando su di te\n  → Maledizione: non puoi mai rimangiarti una promessa fatta mentre lo indossi\n• Le otto catene rimanenti (obiettivo della sua vendetta)\n• Anelli di anime uccise (ogni vittima = un anello della sua catena)\n\nTESORO:\n• Ricchezze della Cittadella delle Ossa Frante\n  (dungeon verticale in una voragine abissale, GS 21 → tesoro da migliaia di mo)",
+    tratti_razziali: "NON-MORTO ENORME (Demone-Scheletro)\n• Scurovisione 36m\n• Percezione Passiva 21\n• Velocità 12m\n• Immunità a Veleno e Fuoco\n• Immunità a condizioni: Avvelenato, Esausto, Spaventato, Paralizzato\n• Resistenze: Freddo, Fulmine, Necrotico;\n  Contundente, Perforante, Tagliente da armi non magiche\n• Linguaggi: Abissale, Comune, Infernale, Telepatia 36m\n• Non respira, non mangia, non dorme\n• Il suo vero nome è Vraekzar (secreto)",
+    privilegi_classe: "TRATTI SPECIALI:\n• Aura di Disperazione: creature ostili entro 9m hanno svantaggio ai TS\n  contro paura e non possono recuperare PF. Se iniziano il turno lì,\n  TS Sag CD 21 o 1 livello di Esaurimento.\n• Resistenza Leggendaria (3/giorno): supera un TS fallito.\n• Catene dello Spezzato: ignora resistenza ai danni contundenti.\n  Quando colpisce, il bersaglio TS For CD 23 o Trattenuto dalle catene\n  spettrali fino alla fine del suo prossimo turno.\n• Frattura dell'Anima (Ricarica 5-6): la prima volta che scende sotto 150 PF,\n  onda d'urto — tutti entro 18m TS Cos CD 21, 10d10 necrotici (metà se superato),\n  e Morghul recupera 50 PF.\n\nAZIONI:\n• Attacchi Multipli: 3 attacchi con Tracollosso.\n• Tracollosso (vedi Equipaggiamento).\n• Scaglia Catena (vedi Equipaggiamento).\n\nAZIONI LEGGENDARIE (3/Turno):\n• Attacco: 1 attacco con Tracollosso.\n• Movimento Infranto (2 Azioni): teletrasporto 18m in una nuvola di schegge\n  d'osso; creature entro 1,5m da partenza/arrivo TS Des CD 21 o 16 taglienti.\n• Urlo del Tradito (3 Azioni): creature a scelta entro 18m TS Sag CD 21\n  o Spaventate per 1 minuto (ripetibile a fine turno).\n\nREAZIONI:\n• Contraccolpo di Catene: se colpito in mischia, attacco Scaglia Catena\n  contro l'attaccante.\n\nAZIONI DA TANA (Cittadella delle Ossa Frante, Init 20):\n1. Pavimento di ossa: area 6m, TS Des CD 21 o 22 perforanti + Prono.\n2. Spiriti di giuramenti infranti: TS Sag CD 21 o il bersaglio usa\n   la reazione per attaccare l'alleato più vicino.\n3. Catena gigante: TS For CD 21 o 27 contundenti + spinto 6m.",
+    talenti: "• Maestro d'Armi Possenti (Great Weapon Master): -5 a colpire, +10 danni\n• Iniziativa Superiore: +5 iniziativa (opzionale)\n• Resistente (Costituzione): +1 Cos e vantaggio ai TS su Cos\n• Incantatore da Guerra (Warcaster): vantaggio ai TS di concentrazione\n• Colpo Possente: danni extra con armi a due mani",
+    note: "Note personali...",
+    lore_ita: "MORGHUL LO SPEZZATO — IL RE CADUTO DELLE CATENE INFRANTE\n\nNon nacque scheletro. Era Morghul Vraekzar, Primo Generale del Signore Balor Zaer'kul e campione della Guerra del Sangue. Per millenni guidò legioni demoniache contro i diavoli, legato a Zaer'kul dal Patto delle Nove Catene: nove giuramenti incisi sulla sua carne che lo rendevano invincibile finché fosse rimasto leale.\n\nDurante l'Assedio di Avernus, Morghul scoprì che Zaer'kul sacrificava interi battaglioni demoniaci in patti segreti con Asmodeus. Considerandolo un disonore, Morghul spezzò la Sesta Catena — \"Non alzerò mai l'arma contro il mio Signore\" — e sfidò Zaer'kul.\n\nZaer'kul non lo uccise. Peggio. Evocò le altre otto catene e le usò per strappargli anima, carne e nome, scagliandolo nell'Abisso più profondo: il Pozzo delle Cose Dimenticate. Lì, per 900 anni, il nulla corrose ogni cosa tranne la sua rabbia e il frammento della Sesta Catena ancora fuso alle sue ossa.\n\nQuando ne emerse, era Morghul lo Spezzato: uno scheletro demoniaco alto 3 metri, con corna spezzate, costole legate da catene arrugginite e occhi che bruciano di fuoco verde. La sua pelle è cenere, la sua voce è il suono di ossa che si frantumano.\n\nDal Pozzo portò con sé Tracollosso, uno spadone forgiato dal suo stesso rancore. Ogni anima uccisa diventa un anello della sua nuova catena, che trascina dietro di sé. Ora governa la Cittadella delle Ossa Frante, dungeon verticale costruito in una voragine abissale. Chi muore lì si rialza come \"Spezzato\" sotto il suo comando.\n\nMorghul non vuole conquistare. Vuole spezzare. Vuole trovare Zaer'kul, frantumare le otto catene rimanenti e usare quel potere per distruggere il concetto stesso di giuramento nei Piani. Se ci riuscisse, nessun patto, divino o infernale, reggerebbe più.\n\nPUNTI DEBOLI NARRATIVI:\n1. La Sesta Catena nel suo petto: se colpita, ricorda il tradimento e lo manda in Furia Cieca per 1 round, ma poi lo stordisce.\n2. Odia la pietà: offrirgli misericordia è l'insulto che lo fa perdere il controllo.\n3. Il vero nome Vraekzar, se pronunciato da chi ha impugnato Tracollosso, lo costringe a dire una verità.",
+    lore_eng: "Write your character's story here."
+};
 
     // ========================================
     // JSONP
@@ -1131,14 +1107,17 @@ const FILE_AUDIO_ENG = "audio-eng.mp3";
                 } else {
                     console.log("✅ Backup non più recente, mantengo il locale");
                 }
-            } else if (!datiLocali) {
-                // Nessun locale E nessun backup: NUOVO PG
-                // NON salvo sul server (evita di sovrascrivere con dati blank)
-                dati = JSON.parse(JSON.stringify(DATI_STANDARD));
-                linguaCorrente = "it";
-                disegnaPagina();
-                console.warn("⚠️ Nessun dato trovato. NON salvo sul server per sicurezza.");
-            }
+} else if (!datiLocali) {
+    // Nessun locale E nessun backup: nuovo tag NFC alla prima apertura
+    // Carica la scheda base di Morghul e la salva subito sul server
+    // per questo UID specifico (così ogni acquirente ha la sua copia)
+    console.log("🆕 Prima apertura per questo tag: carico scheda base Morghul");
+    dati = JSON.parse(JSON.stringify(DATI_STANDARD));
+    linguaCorrente = "it";
+    disegnaPagina();
+    await salvaBackup();
+    console.log("✅ Scheda base Morghul salvata per:", ID_MINIATURA);
+}
 
         } catch (e) {
             console.log("Errore caricamento:", e);

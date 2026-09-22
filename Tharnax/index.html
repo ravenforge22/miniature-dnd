@@ -393,6 +393,27 @@
             border-top: 1px solid #d4c4a8;
         }
 
+        .sync-status {
+            position: fixed;
+            bottom: 15px;
+            right: 15px;
+            background: #2c1810;
+            color: #d4af37;
+            padding: 8px 15px;
+            border-radius: 30px;
+            font-size: 11px;
+            font-family: 'Georgia', serif;
+            border: 1px solid #d4af37;
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 9999;
+            pointer-events: none;
+        }
+
+        .sync-status.show {
+            opacity: 1;
+        }
+
         /* ============================================ */
         /* RESPONSIVE MOBILE                            */
         /* ============================================ */
@@ -491,6 +512,8 @@
         Scansiona l'NFC e ritroverai sempre il tuo personaggio
     </div>
 </div>
+
+<div class="sync-status" id="sync-status">💾 Salvataggio...</div>
 
 <script>
     // ========================================
@@ -672,16 +695,26 @@
 
     let dati = {};
     let linguaCorrente = "it";
+    let sincronizzazioneInCorso = false;
 
     // ========================================
     // CALCOLO MODIFICATORE (D&D 5e)
-    // Formula: floor((punteggio - 10) / 2)
-    // Es: 1 → -5 | 8 → -1 | 10 → 0 | 20 → +5 | 26 → +8
     // ========================================
     function calcolaMod(punteggio) {
         const val = parseInt(punteggio, 10);
         if (isNaN(val)) return 0;
         return Math.floor((val - 10) / 2);
+    }
+
+    // ========================================
+    // INDICATORE DI STATO (feedback visivo)
+    // ========================================
+    function mostraStato(testo, durata = 1500) {
+        const el = document.getElementById("sync-status");
+        if (!el) return;
+        el.textContent = testo;
+        el.classList.add("show");
+        setTimeout(() => el.classList.remove("show"), durata);
     }
 
     // ========================================
@@ -713,15 +746,19 @@
     // ========================================
     async function salvaBackup() {
         if (URL_BACKUP.includes("IL_TUO_SCRIPT_ID")) return;
+        // Aggiungi timestamp di ultima modifica
+        dati._ultimaModifica = Date.now();
         const daSalvare = { ...dati };
         const url = `${URL_BACKUP}?azione=backup&id=${ID_MINIATURA}&dati=${encodeURIComponent(JSON.stringify(daSalvare))}`;
 
         return new Promise((resolve) => {
             jsonpRequest(url, 'callback', (data) => {
                 console.log("Backup risultato:", data);
+                mostraStato("✅ Salvato sul server");
                 resolve();
             }, () => {
                 console.log("Errore backup");
+                mostraStato("⚠️ Offline - salvato solo in locale");
                 resolve();
             });
         });
@@ -752,13 +789,14 @@
         }
     }
 
-    // Debounce per il backup remoto (evita spam di richieste mentre si digita)
+    // Debounce per il backup remoto
     let backupTimer = null;
     function pianificaBackup() {
         if (backupTimer) clearTimeout(backupTimer);
+        mostraStato("💾 Salvataggio...", 2000);
         backupTimer = setTimeout(() => {
             salvaBackup();
-        }, 1500);
+        }, 1200);
     }
 
     function salvaTutto() {
@@ -766,20 +804,17 @@
         pianificaBackup();
     }
 
-    // Per i campi "di testo" (nome, lore, ecc.) basta il salvataggio locale + backup rimandato
     function salvaCampo(campo, valore) {
         dati[campo] = valore;
         salvaTutto();
     }
 
-    // Per le caratteristiche: aggiorna la UI per ricalcolare il modificatore subito
     function salvaCaratteristica(campo, valore) {
         dati[campo] = valore;
         salvaTutto();
         aggiornaModificatori();
     }
 
-    // Aggiorna SOLO i modificatori senza ricostruire l'intera pagina (evita di perdere il focus)
     function aggiornaModificatori() {
         const mappa = {
             forza: 'mod-forza',
@@ -1023,7 +1058,6 @@
         const contenuto = document.getElementById("contenuto");
         if (contenuto) contenuto.innerHTML = html;
 
-        // Evidenzia la lingua attiva
         const btnIta = document.getElementById("btn-ita");
         const btnEng = document.getElementById("btn-eng");
         if (btnIta && btnEng) {
@@ -1032,25 +1066,46 @@
         }
     }
 
+    // ========================================
+    // CARICAMENTO CON SINCRONIZZAZIONE
+    // ========================================
     async function caricaDati() {
         try {
-            const locali = localStorage.getItem(`pg_${ID_MINIATURA}`);
-            if (locali) {
-                dati = JSON.parse(locali);
-                linguaCorrente = dati.lingua || "it";
-            } else {
-                const backup = await recuperaBackup();
-                if (backup) {
+            // 1. Prova a leggere il backup dal server (fonte di verità)
+            const backup = await recuperaBackup();
+
+            // 2. Leggi anche il locale (fallback / confronto)
+            const localiRaw = localStorage.getItem(`pg_${ID_MINIATURA}`);
+            const datiLocali = localiRaw ? JSON.parse(localiRaw) : null;
+
+            // 3. Decidi quale usare in base al timestamp
+            if (backup && datiLocali) {
+                const t_backup = backup._ultimaModifica || 0;
+                const t_locali = datiLocali._ultimaModifica || 0;
+                if (t_backup >= t_locali) {
                     dati = backup;
-                    linguaCorrente = dati.lingua || "it";
-                    salvaLocale();
+                    console.log("✅ Caricato dal BACKUP (più recente)");
                 } else {
-                    dati = JSON.parse(JSON.stringify(DATI_STANDARD));
-                    salvaLocale();
+                    dati = datiLocali;
+                    console.log("✅ Caricato dal LOCALE (più recente del backup)");
                     await salvaBackup();
                 }
+            } else if (backup) {
+                dati = backup;
+                console.log("✅ Caricato dal BACKUP");
+            } else if (datiLocali) {
+                dati = datiLocali;
+                console.log("✅ Caricato dal LOCALE (backup non disponibile)");
+            } else {
+                dati = JSON.parse(JSON.stringify(DATI_STANDARD));
+                console.log("🆕 Primo avvio: dati standard");
+                await salvaBackup();
             }
+
+            linguaCorrente = dati.lingua || "it";
+            salvaLocale();
             disegnaPagina();
+
         } catch (e) {
             console.log("Errore caricamento:", e);
             const contenuto = document.getElementById("contenuto");
@@ -1060,7 +1115,35 @@
         }
     }
 
-    // Esponi funzioni globali (usate negli onclick/oninput dell'HTML)
+    // ========================================
+    // SINCRONIZZAZIONE AUTOMATICA AL RITORNO
+    // ========================================
+    document.addEventListener('visibilitychange', async () => {
+        if (document.visibilityState !== 'visible') return;
+        if (sincronizzazioneInCorso) return;
+        sincronizzazioneInCorso = true;
+        try {
+            const backup = await recuperaBackup();
+            if (backup) {
+                const t_backup = backup._ultimaModifica || 0;
+                const t_locale = dati._ultimaModifica || 0;
+                if (t_backup > t_locale) {
+                    console.log("🔄 Aggiornamento dal server...");
+                    dati = backup;
+                    linguaCorrente = dati.lingua || "it";
+                    salvaLocale();
+                    disegnaPagina();
+                    mostraStato("🔄 Sincronizzato dal server");
+                }
+            }
+        } catch (e) {
+            console.warn("Errore sync:", e);
+        } finally {
+            sincronizzazioneInCorso = false;
+        }
+    });
+
+    // Esponi funzioni globali
     window.setLingua = setLingua;
     window.switchTab = switchTab;
     window.abilitaModificaLore = abilitaModificaLore;

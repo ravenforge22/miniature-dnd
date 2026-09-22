@@ -5,487 +5,72 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>Scheda Personaggio - Raven Forge</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html, body {
-            overflow-x: hidden;
-            max-width: 100vw;
-        }
-
-        body {
-            background: #1a1a2e;
-            font-family: 'Georgia', 'Times New Roman', serif;
-            padding: 15px;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: #f9f3e2;
-            background-image: linear-gradient(to bottom, #fff8ed, #f2e6d5);
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
-            border: 2px solid #d4af37;
-            overflow: hidden;
-            animation: fadeIn 0.8s ease-out;
-            position: relative;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .container::before {
-            content: "❧";
-            position: absolute;
-            top: 15px;
-            left: 20px;
-            font-size: 28px;
-            color: #d4af37;
-            opacity: 0.4;
-            z-index: 1;
-        }
-
-        .container::after {
-            content: "☙";
-            position: absolute;
-            bottom: 15px;
-            right: 20px;
-            font-size: 28px;
-            color: #d4af37;
-            opacity: 0.4;
-            z-index: 1;
-        }
-
-        .shop-header {
-            background: #2c1810;
-            padding: 20px;
-            text-align: center;
-            border-bottom: 3px solid #d4af37;
-            position: relative;
-            z-index: 2;
-        }
-
-        .shop-header img {
-            max-height: 60px;
-            margin-bottom: 10px;
-        }
-
-        .shop-header h1 {
-            color: #d4af37;
-            font-size: 26px;
-            letter-spacing: 3px;
-            text-shadow: 2px 2px 0 #1a0f0a;
-        }
-
-        .shop-header p {
-            color: #c9ae6e;
-            font-size: 12px;
-            margin-top: 8px;
-        }
-
-        .lang-bar {
-            text-align: right;
-            padding: 12px 20px;
-            background: #e8dccc;
-            border-bottom: 1px solid #d4c4a8;
-            position: relative;
-            z-index: 2;
-        }
-
-        .lang-btn {
-            background: #2c1810;
-            color: #d4af37;
-            border: none;
-            padding: 6px 18px;
-            margin: 0 4px;
-            border-radius: 30px;
-            cursor: pointer;
-            font-family: inherit;
-            font-weight: bold;
-            font-size: 13px;
-        }
-
-        .lang-btn.active {
-            background: #d4af37;
-            color: #2c1810;
-        }
-
-        .content {
-            padding: 25px;
-            position: relative;
-            z-index: 2;
-        }
-
-        .media-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 25px;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 25px;
-            padding-bottom: 20px;
-            border-bottom: 2px solid #d4c4a8;
-        }
-
-        .char-img img {
-            width: 140px;
-            height: 140px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid #d4af37;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-
-        audio {
-            width: 320px;
-            border-radius: 40px;
-        }
-
-        .stats-top {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            justify-content: space-between;
-            background: #2c1810;
-            padding: 15px 20px;
-            border-radius: 15px;
-            margin-bottom: 25px;
-            color: #f9f3e2;
-        }
-
-        .stat-block {
-            text-align: center;
-            flex: 1;
-            min-width: 80px;
-        }
-
-        .stat-block label {
-            font-size: 11px;
-            color: #d4af37;
-            display: block;
-        }
-
-        .stat-block input {
-            font-size: 18px;
-            font-weight: bold;
-            text-align: center;
-            background: #1a1a2e;
-            border: 1px solid #d4af37;
-            border-radius: 10px;
-            padding: 5px;
-            width: 80px;
-            color: #d4af37;
-            font-family: inherit;
-            margin-top: 5px;
-        }
-
-        .form-row {
-            display: flex;
-            flex-wrap: wrap;
-            margin-bottom: 12px;
-            align-items: baseline;
-            gap: 10px;
-        }
-
-        .form-row label {
-            font-weight: bold;
-            color: #3a2a1a;
-            font-size: 14px;
-            min-width: 90px;
-        }
-
-        .form-row input,
-        .form-row textarea {
-            flex: 1;
-            background: #fefcf5;
-            border: 1px solid #d4c4a8;
-            border-radius: 8px;
-            padding: 8px 12px;
-            font-family: 'Georgia', serif;
-            font-size: 14px;
-        }
-
-        .tabs {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 5px;
-            margin: 20px 0;
-            border-bottom: 2px solid #d4c4a8;
-            padding-bottom: 10px;
-        }
-
-        .tab-btn {
-            background: #e8dccc;
-            color: #2c1810;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 30px 30px 0 0;
-            cursor: pointer;
-            font-weight: bold;
-            font-family: inherit;
-            font-size: 13px;
-        }
-
-        .tab-btn.active {
-            background: #d4af37;
-            color: #1a1a2e;
-        }
-
-        .tab-pane {
-            display: none;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .tab-pane.active {
-            display: block;
-        }
-
-        .sheet-card {
-            background: #fffef7;
-            border: 1px solid #d4c4a8;
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-
-        .sheet-card h3 {
-            color: #2c1810;
-            border-bottom: 2px solid #d4af37;
-            display: inline-block;
-            margin-bottom: 18px;
-            font-size: 18px;
-        }
-
-        .sheet-card textarea {
-            width: 100%;
-            background: #fefcf5;
-            border: 1px solid #d4c4a8;
-            border-radius: 8px;
-            padding: 10px 12px;
-            font-family: 'Georgia', serif;
-            font-size: 14px;
-            resize: vertical;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(6, 1fr);
-            gap: 12px;
-            margin: 20px 0;
-            text-align: center;
-        }
-
-        .stat-box {
-            background: #f3ecd9;
-            border: 1px solid #c9ae6e;
-            border-radius: 12px;
-            padding: 10px;
-        }
-
-        .stat-box label {
-            font-size: 12px;
-            font-weight: bold;
-            display: block;
-            color: #2c1810;
-        }
-
-        .stat-box input {
-            font-size: 22px;
-            font-weight: bold;
-            text-align: center;
-            width: 70px;
-            margin: 8px auto 0;
-            display: block;
-            background: #fffef7;
-            border: 1px solid #c9ae6e;
-            border-radius: 8px;
-            padding: 5px;
-            font-family: inherit;
-        }
-
-        .stat-box .mod {
-            font-size: 12px;
-            color: #d4af37;
-            margin-top: 5px;
-        }
-
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 8px 15px;
-        }
-
-        .skill-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .skill-item label {
-            width: 160px;
-            font-size: 12px;
-            font-weight: bold;
-        }
-
-        .skill-item input {
-            width: 55px;
-            text-align: center;
-            background: #fefcf5;
-            border: 1px solid #c9ae6e;
-            border-radius: 6px;
-            padding: 5px;
-        }
-
-        .lore-box {
-            background: #f3ecd9;
-            border-radius: 12px;
-            padding: 15px;
-            margin-top: 10px;
-        }
-
-        .lore-text {
-            line-height: 1.6;
-            margin-bottom: 12px;
-            white-space: pre-wrap;
-        }
-
-        .lore-textarea {
-            width: 100%;
-            background: #fffef7;
-            border: 1px solid #c9ae6e;
-            border-radius: 12px;
-            padding: 15px;
-            font-family: 'Georgia', serif;
-            display: none;
-            margin-bottom: 12px;
-            min-height: 150px;
-        }
-
-        button {
-            background: #2c1810;
-            color: #d4af37;
-            border: none;
-            padding: 8px 22px;
-            margin: 5px 5px 0 0;
-            border-radius: 40px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 13px;
-        }
-
-        button:hover {
-            background: #d4af37;
-            color: #2c1810;
-        }
-
-        .footer {
-            text-align: center;
-            padding: 18px;
-            background: #e8dccc;
-            font-size: 11px;
-            color: #5a4a3a;
-            border-top: 1px solid #d4c4a8;
-        }
-
-        .sync-status {
-            position: fixed;
-            bottom: 15px;
-            right: 15px;
-            background: #2c1810;
-            color: #d4af37;
-            padding: 8px 15px;
-            border-radius: 30px;
-            font-size: 11px;
-            font-family: 'Georgia', serif;
-            border: 1px solid #d4af37;
-            opacity: 0;
-            transition: opacity 0.3s;
-            z-index: 9999;
-            pointer-events: none;
-        }
-
-        .sync-status.show {
-            opacity: 1;
-        }
-
-        /* ============================================ */
-        /* RESPONSIVE MOBILE                            */
-        /* ============================================ */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { overflow-x: hidden; max-width: 100vw; }
+        body { background: #1a1a2e; font-family: 'Georgia', 'Times New Roman', serif; padding: 15px; }
+        .container { max-width: 1200px; margin: 0 auto; background: #f9f3e2; background-image: linear-gradient(to bottom, #fff8ed, #f2e6d5); border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.4); border: 2px solid #d4af37; overflow: hidden; animation: fadeIn 0.8s ease-out; position: relative; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .container::before { content: "❧"; position: absolute; top: 15px; left: 20px; font-size: 28px; color: #d4af37; opacity: 0.4; z-index: 1; }
+        .container::after { content: "☙"; position: absolute; bottom: 15px; right: 20px; font-size: 28px; color: #d4af37; opacity: 0.4; z-index: 1; }
+        .shop-header { background: #2c1810; padding: 20px; text-align: center; border-bottom: 3px solid #d4af37; position: relative; z-index: 2; }
+        .shop-header img { max-height: 60px; margin-bottom: 10px; }
+        .shop-header h1 { color: #d4af37; font-size: 26px; letter-spacing: 3px; text-shadow: 2px 2px 0 #1a0f0a; }
+        .shop-header p { color: #c9ae6e; font-size: 12px; margin-top: 8px; }
+        .lang-bar { text-align: right; padding: 12px 20px; background: #e8dccc; border-bottom: 1px solid #d4c4a8; position: relative; z-index: 2; }
+        .lang-btn { background: #2c1810; color: #d4af37; border: none; padding: 6px 18px; margin: 0 4px; border-radius: 30px; cursor: pointer; font-family: inherit; font-weight: bold; font-size: 13px; }
+        .lang-btn.active { background: #d4af37; color: #2c1810; }
+        .content { padding: 25px; position: relative; z-index: 2; }
+        .media-row { display: flex; flex-wrap: wrap; gap: 25px; justify-content: center; align-items: center; margin-bottom: 25px; padding-bottom: 20px; border-bottom: 2px solid #d4c4a8; }
+        .char-img img { width: 140px; height: 140px; border-radius: 50%; object-fit: cover; border: 4px solid #d4af37; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        audio { width: 320px; border-radius: 40px; }
+        .stats-top { display: flex; flex-wrap: wrap; gap: 15px; justify-content: space-between; background: #2c1810; padding: 15px 20px; border-radius: 15px; margin-bottom: 25px; color: #f9f3e2; }
+        .stat-block { text-align: center; flex: 1; min-width: 80px; }
+        .stat-block label { font-size: 11px; color: #d4af37; display: block; }
+        .stat-block input { font-size: 18px; font-weight: bold; text-align: center; background: #1a1a2e; border: 1px solid #d4af37; border-radius: 10px; padding: 5px; width: 80px; color: #d4af37; font-family: inherit; margin-top: 5px; }
+        .form-row { display: flex; flex-wrap: wrap; margin-bottom: 12px; align-items: baseline; gap: 10px; }
+        .form-row label { font-weight: bold; color: #3a2a1a; font-size: 14px; min-width: 90px; }
+        .form-row input, .form-row textarea { flex: 1; background: #fefcf5; border: 1px solid #d4c4a8; border-radius: 8px; padding: 8px 12px; font-family: 'Georgia', serif; font-size: 14px; }
+        .tabs { display: flex; flex-wrap: wrap; gap: 5px; margin: 20px 0; border-bottom: 2px solid #d4c4a8; padding-bottom: 10px; }
+        .tab-btn { background: #e8dccc; color: #2c1810; border: none; padding: 10px 20px; border-radius: 30px 30px 0 0; cursor: pointer; font-weight: bold; font-family: inherit; font-size: 13px; }
+        .tab-btn.active { background: #d4af37; color: #1a1a2e; }
+        .tab-pane { display: none; animation: fadeIn 0.3s ease; }
+        .tab-pane.active { display: block; }
+        .sheet-card { background: #fffef7; border: 1px solid #d4c4a8; border-radius: 15px; padding: 20px; margin-bottom: 20px; }
+        .sheet-card h3 { color: #2c1810; border-bottom: 2px solid #d4af37; display: inline-block; margin-bottom: 18px; font-size: 18px; }
+        .sheet-card textarea { width: 100%; background: #fefcf5; border: 1px solid #d4c4a8; border-radius: 8px; padding: 10px 12px; font-family: 'Georgia', serif; font-size: 14px; resize: vertical; }
+        .stats-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; margin: 20px 0; text-align: center; }
+        .stat-box { background: #f3ecd9; border: 1px solid #c9ae6e; border-radius: 12px; padding: 10px; }
+        .stat-box label { font-size: 12px; font-weight: bold; display: block; color: #2c1810; }
+        .stat-box input { font-size: 22px; font-weight: bold; text-align: center; width: 70px; margin: 8px auto 0; display: block; background: #fffef7; border: 1px solid #c9ae6e; border-radius: 8px; padding: 5px; font-family: inherit; }
+        .stat-box .mod { font-size: 12px; color: #d4af37; margin-top: 5px; }
+        .skills-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px 15px; }
+        .skill-item { display: flex; align-items: center; gap: 8px; }
+        .skill-item label { width: 160px; font-size: 12px; font-weight: bold; }
+        .skill-item input { width: 55px; text-align: center; background: #fefcf5; border: 1px solid #c9ae6e; border-radius: 6px; padding: 5px; }
+        .lore-box { background: #f3ecd9; border-radius: 12px; padding: 15px; margin-top: 10px; }
+        .lore-text { line-height: 1.6; margin-bottom: 12px; white-space: pre-wrap; }
+        .lore-textarea { width: 100%; background: #fffef7; border: 1px solid #c9ae6e; border-radius: 12px; padding: 15px; font-family: 'Georgia', serif; display: none; margin-bottom: 12px; min-height: 150px; }
+        button { background: #2c1810; color: #d4af37; border: none; padding: 8px 22px; margin: 5px 5px 0 0; border-radius: 40px; cursor: pointer; font-weight: bold; font-size: 13px; }
+        button:hover { background: #d4af37; color: #2c1810; }
+        .footer { text-align: center; padding: 18px; background: #e8dccc; font-size: 11px; color: #5a4a3a; border-top: 1px solid #d4c4a8; }
+        .sync-status { position: fixed; bottom: 15px; right: 15px; background: #2c1810; color: #d4af37; padding: 8px 15px; border-radius: 30px; font-size: 11px; font-family: 'Georgia', serif; border: 1px solid #d4af37; opacity: 0; transition: opacity 0.3s; z-index: 9999; pointer-events: none; }
+        .sync-status.show { opacity: 1; }
         @media (max-width: 700px) {
             .content { padding: 15px; }
-
-            .stats-grid {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 6px;
-                margin: 15px 0;
-            }
-
-            .stat-box {
-                padding: 4px 2px;
-                border-radius: 8px;
-                min-width: 0;
-            }
-
-            .stat-box label {
-                font-size: 9px;
-                letter-spacing: -0.3px;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-            }
-
-            .stat-box input {
-                width: 50px;
-                font-size: 16px;
-                padding: 2px;
-                margin: 2px auto 0;
-            }
-
-            .stat-box .mod {
-                font-size: 8px;
-                margin-top: 1px;
-            }
-
-            .form-row {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .form-row label {
-                margin-bottom: 5px;
-            }
-
-            .skills-grid {
-                grid-template-columns: 1fr;
-            }
-
+            .stats-grid { grid-template-columns: repeat(3, 1fr); gap: 6px; margin: 15px 0; }
+            .stat-box { padding: 4px 2px; border-radius: 8px; min-width: 0; }
+            .stat-box label { font-size: 9px; letter-spacing: -0.3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+            .stat-box input { width: 50px; font-size: 16px; padding: 2px; margin: 2px auto 0; }
+            .stat-box .mod { font-size: 8px; margin-top: 1px; }
+            .form-row { flex-direction: column; align-items: flex-start; }
+            .form-row label { margin-bottom: 5px; }
+            .skills-grid { grid-template-columns: 1fr; }
             audio { width: 100%; }
-
             .tabs { justify-content: center; }
-
             .skill-item { flex-wrap: wrap; }
-
             .skill-item label { width: 100%; }
-
-            .form-row input,
-            .form-row textarea,
-            .skill-item input,
-            .stats-top input,
-            .stat-box input,
-            .sheet-card textarea {
-                max-width: 100%;
-                width: 100%;
-            }
-
-            .stats-top .stat-block input {
-                width: 70px;
-            }
+            .form-row input, .form-row textarea, .skill-item input, .stats-top input, .stat-box input, .sheet-card textarea { max-width: 100%; width: 100%; }
+            .stats-top .stat-block input { width: 70px; }
         }
     </style>
 </head>
@@ -520,182 +105,81 @@
     // CONFIGURAZIONE
     // ========================================
     const URL_BACKUP = "https://script.google.com/macros/s/AKfycbwdicnr7glb8tl8WbKQkmbKHslNs7umhOa236lNqCg_2-4fazgXEBtqFo09VcWQzpFDHw/exec";
-    const ID_MINIATURA = "Tharnax";
+
+    // Legge l'UID del tag NFC dall'URL (?uid=XXXX)
+    const urlParams = new URLSearchParams(window.location.search);
+    const TAG_UID = urlParams.get('uid');
+    const ID_MINIATURA = TAG_UID ? `nfc_${TAG_UID}` : "Tharnax";
+
+    console.log("🆔 ID personaggio:", ID_MINIATURA, "(UID tag:", TAG_UID || "nessuno", ")");
+
     const FILE_IMMAGINE_PG = "immagine.jpg";
     const FILE_AUDIO_ITA = "audio-ita.mp3";
     const FILE_AUDIO_ENG = "audio-eng.mp3";
+
+    // ========================================
+    // STATO GLOBALE
+    // ========================================
+    let dati = {};
+    let linguaCorrente = "it";
+    let sincronizzazioneInCorso = false;
 
     // ========================================
     // TRADUZIONI
     // ========================================
     const labels = {
         it: {
-            tab_combat: "⚔️ COMBATTIMENTO",
-            tab_spells: "🔮 INCANTESIMI",
-            tab_inventory: "🎒 EQUIPAGGIAMENTO",
-            tab_features: "✨ TRATTI",
-            tab_notes: "📝 NOTE & LORE",
-            title_caratteristiche: "⭐ CARATTERISTICHE",
-            title_tiro_salvezza: "🛡️ TIRO SALVEZZA",
-            title_competenze: "🎯 COMPETENZE",
-            title_incantesimi: "🔮 INCANTESIMI",
-            title_equipaggiamento: "🎒 EQUIPAGGIAMENTO",
-            title_tratti_razziali: "✨ TRATTI RAZZIALI",
-            title_privilegi_classe: "⚙️ PRIVILEGI DI CLASSE",
-            title_talenti: "🏆 TALENTI",
-            title_note: "📝 NOTE",
-            title_lore: "📖 LORE / STORIA",
-            label_ca: "Classe Armatura (CA)",
-            label_pf: "Punti Ferita",
-            label_pf_attuali: "PF Attuali",
-            label_iniziativa: "Iniziativa",
-            label_velocita: "Velocità",
-            label_nome: "Nome:",
-            label_classe: "Classe:",
-            label_livello: "Livello:",
-            label_razza: "Razza:",
-            label_background: "Background:",
-            label_allineamento: "Allineamento:",
-            stat_forza: "FORZA",
-            stat_destrezza: "DESTREZZA",
-            stat_costituzione: "COSTITUZIONE",
-            stat_intelligenza: "INTELLIGENZA",
-            stat_saggezza: "SAGGEZZA",
-            stat_carisma: "CARISMA",
-            ts_forza: "FORZA",
-            ts_destrezza: "DESTREZZA",
-            ts_costituzione: "COSTITUZIONE",
-            ts_intelligenza: "INTELLIGENZA",
-            ts_saggezza: "SAGGEZZA",
-            ts_carisma: "CARISMA",
-            skill_acrobazia: "Acrobazia (Des)",
-            skill_atletica: "Atletica (For)",
-            skill_furtivita: "Furtività (Des)",
-            skill_percezione: "Percezione (Sag)",
-            skill_sopravvivenza: "Sopravvivenza (Sag)",
-            skill_arcano: "Arcano (Int)",
-            skill_indagare: "Indagare (Int)",
-            skill_intuizione: "Intuizione (Sag)",
-            skill_intimidire: "Intimidire (Car)",
-            skill_persuasione: "Persuasione (Car)",
-            skill_religione: "Religione (Int)",
-            label_cd_ts: "CD Tiro Salvezza:",
-            label_bonus_attacco: "Bonus Attacco:",
-            placeholder_incantesimi: "Lista incantesimi e trucchetti...",
-            placeholder_equip: "Armi, armature, oggetti, monete...",
-            btn_modifica_lore: "✏️ Modifica Lore",
-            btn_salva_lore: "💾 Salva Lore"
+            tab_combat: "⚔️ COMBATTIMENTO", tab_spells: "🔮 INCANTESIMI", tab_inventory: "🎒 EQUIPAGGIAMENTO", tab_features: "✨ TRATTI", tab_notes: "📝 NOTE & LORE",
+            title_caratteristiche: "⭐ CARATTERISTICHE", title_tiro_salvezza: "🛡️ TIRO SALVEZZA", title_competenze: "🎯 COMPETENZE",
+            title_incantesimi: "🔮 INCANTESIMI", title_equipaggiamento: "🎒 EQUIPAGGIAMENTO",
+            title_tratti_razziali: "✨ TRATTI RAZZIALI", title_privilegi_classe: "⚙️ PRIVILEGI DI CLASSE", title_talenti: "🏆 TALENTI",
+            title_note: "📝 NOTE", title_lore: "📖 LORE / STORIA",
+            label_ca: "Classe Armatura (CA)", label_pf: "Punti Ferita", label_pf_attuali: "PF Attuali", label_iniziativa: "Iniziativa", label_velocita: "Velocità",
+            label_nome: "Nome:", label_classe: "Classe:", label_livello: "Livello:", label_razza: "Razza:", label_background: "Background:", label_allineamento: "Allineamento:",
+            stat_forza: "FORZA", stat_destrezza: "DESTREZZA", stat_costituzione: "COSTITUZIONE", stat_intelligenza: "INTELLIGENZA", stat_saggezza: "SAGGEZZA", stat_carisma: "CARISMA",
+            ts_forza: "FORZA", ts_destrezza: "DESTREZZA", ts_costituzione: "COSTITUZIONE", ts_intelligenza: "INTELLIGENZA", ts_saggezza: "SAGGEZZA", ts_carisma: "CARISMA",
+            skill_acrobazia: "Acrobazia (Des)", skill_atletica: "Atletica (For)", skill_furtivita: "Furtività (Des)", skill_percezione: "Percezione (Sag)", skill_sopravvivenza: "Sopravvivenza (Sag)", skill_arcano: "Arcano (Int)", skill_indagare: "Indagare (Int)", skill_intuizione: "Intuizione (Sag)", skill_intimidire: "Intimidire (Car)", skill_persuasione: "Persuasione (Car)", skill_religione: "Religione (Int)",
+            label_cd_ts: "CD Tiro Salvezza:", label_bonus_attacco: "Bonus Attacco:",
+            placeholder_incantesimi: "Lista incantesimi e trucchetti...", placeholder_equip: "Armi, armature, oggetti, monete...",
+            btn_modifica_lore: "✏️ Modifica Lore", btn_salva_lore: "💾 Salva Lore"
         },
         en: {
-            tab_combat: "⚔️ COMBAT",
-            tab_spells: "🔮 SPELLS",
-            tab_inventory: "🎒 INVENTORY",
-            tab_features: "✨ FEATURES",
-            tab_notes: "📝 NOTES & LORE",
-            title_caratteristiche: "⭐ ABILITY SCORES",
-            title_tiro_salvezza: "🛡️ SAVING THROWS",
-            title_competenze: "🎯 SKILLS",
-            title_incantesimi: "🔮 SPELLS",
-            title_equipaggiamento: "🎒 EQUIPMENT",
-            title_tratti_razziali: "✨ RACIAL TRAITS",
-            title_privilegi_classe: "⚙️ CLASS FEATURES",
-            title_talenti: "🏆 FEATS",
-            title_note: "📝 NOTES",
-            title_lore: "📖 LORE / STORY",
-            label_ca: "Armor Class (AC)",
-            label_pf: "Hit Points",
-            label_pf_attuali: "Current HP",
-            label_iniziativa: "Initiative",
-            label_velocita: "Speed",
-            label_nome: "Name:",
-            label_classe: "Class:",
-            label_livello: "Level:",
-            label_razza: "Race:",
-            label_allineamento: "Alignment:",
-            stat_forza: "STRENGTH",
-            stat_destrezza: "DEXTERITY",
-            stat_costituzione: "CONSTITUTION",
-            stat_intelligenza: "INTELLIGENCE",
-            stat_saggezza: "WISDOM",
-            stat_carisma: "CHARISMA",
-            ts_forza: "STR",
-            ts_destrezza: "DEX",
-            ts_costituzione: "CON",
-            ts_intelligenza: "INT",
-            ts_saggezza: "WIS",
-            ts_carisma: "CHA",
-            skill_acrobazia: "Acrobatics (Dex)",
-            skill_atletica: "Athletics (Str)",
-            skill_furtivita: "Stealth (Dex)",
-            skill_percezione: "Perception (Wis)",
-            skill_sopravvivenza: "Survival (Wis)",
-            skill_arcano: "Arcana (Int)",
-            skill_indagare: "Investigation (Int)",
-            skill_intuizione: "Insight (Wis)",
-            skill_intimidire: "Intimidation (Cha)",
-            skill_persuasione: "Persuasion (Cha)",
-            skill_religione: "Religion (Int)",
-            label_cd_ts: "Spell Save DC:",
-            label_bonus_attacco: "Spell Attack Bonus:",
-            placeholder_incantesimi: "Spells and cantrips list...",
-            placeholder_equip: "Weapons, armor, items, coins...",
-            btn_modifica_lore: "✏️ Edit Lore",
-            btn_salva_lore: "💾 Save Lore"
+            tab_combat: "⚔️ COMBAT", tab_spells: "🔮 SPELLS", tab_inventory: "🎒 INVENTORY", tab_features: "✨ FEATURES", tab_notes: "📝 NOTES & LORE",
+            title_caratteristiche: "⭐ ABILITY SCORES", title_tiro_salvezza: "🛡️ SAVING THROWS", title_competenze: "🎯 SKILLS",
+            title_incantesimi: "🔮 SPELLS", title_equipaggiamento: "🎒 EQUIPMENT",
+            title_tratti_razziali: "✨ RACIAL TRAITS", title_privilegi_classe: "⚙️ CLASS FEATURES", title_talenti: "🏆 FEATS",
+            title_note: "📝 NOTES", title_lore: "📖 LORE / STORY",
+            label_ca: "Armor Class (AC)", label_pf: "Hit Points", label_pf_attuali: "Current HP", label_iniziativa: "Initiative", label_velocita: "Speed",
+            label_nome: "Name:", label_classe: "Class:", label_livello: "Level:", label_razza: "Race:", label_allineamento: "Alignment:",
+            stat_forza: "STRENGTH", stat_destrezza: "DEXTERITY", stat_costituzione: "CONSTITUTION", stat_intelligenza: "INTELLIGENCE", stat_saggezza: "WISDOM", stat_carisma: "CHARISMA",
+            ts_forza: "STR", ts_destrezza: "DEX", ts_costituzione: "CON", ts_intelligenza: "INT", ts_saggezza: "WIS", ts_carisma: "CHA",
+            skill_acrobazia: "Acrobatics (Dex)", skill_atletica: "Athletics (Str)", skill_furtivita: "Stealth (Dex)", skill_percezione: "Perception (Wis)", skill_sopravvivenza: "Survival (Wis)", skill_arcano: "Arcana (Int)", skill_indagare: "Investigation (Int)", skill_intuizione: "Insight (Wis)", skill_intimidire: "Intimidation (Cha)", skill_persuasione: "Persuasion (Cha)", skill_religione: "Religion (Int)",
+            label_cd_ts: "Spell Save DC:", label_bonus_attacco: "Spell Attack Bonus:",
+            placeholder_incantesimi: "Spells and cantrips list...", placeholder_equip: "Weapons, armor, items, coins...",
+            btn_modifica_lore: "✏️ Edit Lore", btn_salva_lore: "💾 Save Lore"
         }
     };
 
-    // DATI STANDARD
+    // ========================================
+    // DATI STANDARD - SCHEDA BASE THARNAX
+    // ========================================
     const DATI_STANDARD = {
-        lingua: "it",
-        nome_pg: "Nome",
-        classe_pg: "Classe",
-        razza_pg: "Razza",
-        livello_pg: "1",
-        allineamento: "Neutrale",
-        esperienza: "0",
-        forza: "10",
-        destrezza: "10",
-        costituzione: "10",
-        intelligenza: "10",
-        saggezza: "10",
-        carisma: "10",
-        pf_totali: "10",
-        pf_attuali: "10",
-        ca: "10",
-        iniziativa: "0",
-        velocita: "9",
-        ts_forza: "0",
-        ts_destrezza: "0",
-        ts_costituzione: "0",
-        ts_intelligenza: "0",
-        ts_saggezza: "0",
-        ts_carisma: "0",
-        acrobazia: "0",
-        atletica: "0",
-        furtivita: "0",
-        percezione: "0",
-        sopravvivenza: "0",
-        arcano: "0",
-        indagare: "0",
-        intuizione: "0",
-        intimidire: "0",
-        persuasione: "0",
-        religione: "0",
-        cd_ts: "",
-        bonus_attacco: "",
-        incantesimi: "",
-        equipaggiamento: "",
-        tratti_razziali: "Tratti razziali...",
-        privilegi_classe: "Privilegi di classe...",
-        talenti: "Talenti...",
+        lingua: "it", nome_pg: "Tharnax", classe_pg: "Barbaro Totem / Guerriero Battlemaster", razza_pg: "Taurocentauro", livello_pg: "18",
+        allineamento: "Caotico Neutrale", esperienza: "0",
+        forza: "26", destrezza: "14", costituzione: "24", intelligenza: "10", saggezza: "14", carisma: "16",
+        pf_totali: "287", pf_attuali: "287", ca: "19", iniziativa: "+2", velocita: "18",
+        ts_forza: "14", ts_destrezza: "2", ts_costituzione: "13", ts_intelligenza: "0", ts_saggezza: "8", ts_carisma: "3",
+        acrobazia: "+2", atletica: "+14", furtivita: "+2", percezione: "+8", sopravvivenza: "+8", arcano: "0",
+        indagare: "0", intuizione: "+2", intimidire: "+9", persuasione: "+3", religione: "0",
+        cd_ts: "", bonus_attacco: "", incantesimi: "",
+        equipaggiamento: "ARMI:\n• Spaccamondo (Ascia Titanica) — +14 a colpire, 2d10+8 taglienti, crit 19-20, danno doppio vs oggetti\n• Tagliatempesta (Ascia Titanica) — +14 a colpire, 2d8+8 taglienti + 2d6 fulmine; 1/turno se colpisce, TS Des CD 18 o il bersaglio non può usare reazioni\n• Incornata (Elmo Korr'Ghul) — +14 a colpire, 3d8+8 perforanti + spinta 3m\n\nARMATURA:\n• Pelle Corazzata Naturale — CA 19 senza armatura\n• Elmo Korr'Ghul, l'Elmo del Toro Nero (artefatto) — 13 corna-trofeo di campioni uccisi\n  → vantaggio vs Ammaliato e Spaventato\n  → 1/giorno: Incornata come Azione Bonus\n\nOGGETTI ICONICI:\n• Corno di Korr'Ghul Spezzato (Oggetto Meraviglioso, Raro)\n  → 1/giorno come Azione: replica Muggito di Guerra (CD 15)\n  → Se centauro/minotauro: CD 17, area 36m\n• Catene spezzate del lanista Vrakos (ricordo del tradimento)\n\nTESORO:\n• Ricchezze accumulate come Campione dell'Arena Infranta",
+        tratti_razziali: "TAUROCENTAURO (Mostruosità Grande)\n• Scurovisione 18m\n• Velocità 18m (zoccoli da guerra)\n• Pelle Corazzata Naturale: CA base 19 senza armatura\n• Carica Inarrestabile: se si muove ≥6m in linea retta e colpisce con un'ascia nello stesso turno, +16 danni extra e il bersaglio TS For CD 22 o Prono. Se il bersaglio è Grande o più piccolo, può continuare la carica attraverso il suo spazio.\n• Odore del Sangue: vantaggio a Percezione e Sopravvivenza per fiutare creature sotto metà PF entro 36m.\n• Resistenze: Contundente, Perforante, Tagliente da armi non magiche.\n• Linguaggi: Comune, Gigante, Silvano.",
+        privilegi_classe: "BARBARO — Cammino del Totem (Orso) / GUERRIERO — Maestro di Battaglia\n• Ira: bonus ai danni, resistenza ai danni fisici, vantaggio a prove di Forza\n• Difesa Senza Armatura: CA = 10 + Des + Cos (qui Pelle Corazzata Naturale 19)\n• Attacco Irruento: vantaggio agli attacchi, ma i nemici hanno vantaggio contro di lui\n• Totem dell'Orso: durante l'Ira, resistenza a tutti i danni tranne psichico\n• Spostamento Veloce: +3m velocità\n• Sensi Ferini: vantaggio a Percezione\n• Azione Impetuosa (1/riposo): una azione extra\n• Recuperare Energie (1/riposo): recupera 1d10 + livello PF\n• Attacco Multiplo: 4 attacchi (2 Spaccamondo + 2 Tagliatempesta)\n• Manovre di Battaglia (Maestro di Battaglia): dadi superiorità per spingere, sbilanciare, disarmare\n• Contrattacco Cornuto (Reazione): se mancato da creatura entro 1,5m, attacco di Incornata contro di essa\n\nCAPACITÀ SPECIALI (boss/PNG):\n• Resistenza Leggendaria (3/giorno): supera un TS fallito\n• Azioni Leggendarie (3/turno): Galoppo, Doppio Fendente, Tremito dello Zoccolo\n• Azioni da Tana (Init 20): Totem di Guerra, Polvere di Battaglia, Carica della Mandria",
+        talenti: "• Carica Travolgente (Charger): dopo una carica, +5 danni oppure spinta +3m\n• Maestro d'Armi Possenti (Great Weapon Master): critico o uccisione = attacco bonus; -5 a colpire / +10 danni\n• Combattere con Due Armi (Dual Wielder): +1 CA con due armi\n• Resistente (Costituzione): +1 Cos e vantaggio ai TS su Costituzione\n• Allerta (Alert): +5 iniziativa, non può essere sorpreso",
         note: "Note personali...",
-        lore_ita: "Scrivi qui la storia del tuo personaggio.",
+        lore_ita: "THARNAX IL DUOFENDENTE — IL MINOTAURO-CENTAURO DELL'ARENA INFRANTA\n\nMetà toro da guerra, metà barbaro delle pianure d'ossa. Muscoli su muscoli, zoccoli che spaccano pietra e un elmo cornuto che ha incornato draghi. Brandisce due asce titaniche: Spaccamondo e Tagliatempesta.\n\nEra il campione dell'Arena Infranta, fossa di combattimento interplanare dove i gladiatori muoiono per divertire i Titani. Tradito dal suo lanista, ora Tharnax è fuggito e guida la Mandria Spezzata: minotauri, centauri e bestie ribelli.\n\nORIGINE:\nNato nella Polvere di Sangue. È un Taurocentauro, razza creata magicamente dai Signori dell'Arena Infranta mescolando il DNA di minotauri da fossa e centauri da guerra delle Pianure di Ghur. L'esperimento #7 fu l'unico a sopravvivere. Da puledro gli saldarono l'elmo cornuto al cranio: Korr'Ghul, l'Elmo del Toro Nero, artefatto che si nutre di vittorie. Ogni corno è un trofeo strappato a un campione ucciso. Ne ha 13.\n\nLA GLORIA:\n100 vittorie, 0 sconfitte in 20 anni. Carica, doppia ascia, ripeti. I Titani lo chiamavano \"Il Duofendente\" perché ogni colpo tagliava due nemici.\n\nIL TRADIMENTO:\nIl lanista Vrakos il Grasso lo vendette a un Principe Demone per saldare debiti. Drogato e incatenato, doveva diventare cane da guardia all'Inferno. Durante il trasporto, spezzò le catene con il collo, incornò Vrakos e liberò altri 40 gladiatori-bestia.\n\nOra comanda la Mandria Spezzata. Non cerca vendetta. Cerca una battaglia che possa perdere. Perché ha giurato a Korr'Ghul che il giorno in cui cadrà in combattimento leale, l'elmo libererà tutte le anime che ha preso.\n\nCODICE DI THARNAX:\n1. Mai colpire chi è a terra, a meno che non si rialzi.\n2. Mai rifiutare un duello 1v1.\n3. Mai caricare chi scappa. La paura è già una sconfitta.\n\nPUNTI DEBOLI NARRATIVI:\n1. Sfida d'Onore: se accetti un duello 1v1 e lo batti senza magia né inganni, la Mandria ti lascia passare. Se bari, ti cacciano per sempre.\n2. Elmo Korr'Ghul: se gli stacchi l'elmo (Prova di Forza CD 25 in lotta), Tharnax perde +2 CA e Resistenza Leggendaria, ma entra in Furia Primordiale: +20 danni per 3 round, poi sviene.\n3. Spazio Stretto: odia i dungeon. Se non può caricare almeno 6m in linea retta, ha svantaggio agli attacchi.",
         lore_eng: "Write your character's story here."
     };
-
-    let dati = {};
-    let linguaCorrente = "it";
-    let sincronizzazioneInCorso = false;
 
     // ========================================
     // CALCOLO MODIFICATORE (D&D 5e)
@@ -707,7 +191,7 @@
     }
 
     // ========================================
-    // INDICATORE DI STATO (feedback visivo)
+    // INDICATORE DI STATO
     // ========================================
     function mostraStato(testo, durata = 1500) {
         const el = document.getElementById("sync-status");
@@ -718,7 +202,7 @@
     }
 
     // ========================================
-    // JSONP (per bypassare CORS)
+    // JSONP
     // ========================================
     function jsonpRequest(url, callbackName, onSuccess, onError) {
         const script = document.createElement('script');
@@ -746,7 +230,6 @@
     // ========================================
     async function salvaBackup() {
         if (URL_BACKUP.includes("IL_TUO_SCRIPT_ID")) return;
-        // Aggiungi timestamp di ultima modifica
         dati._ultimaModifica = Date.now();
         const daSalvare = { ...dati };
         const url = `${URL_BACKUP}?azione=backup&id=${ID_MINIATURA}&dati=${encodeURIComponent(JSON.stringify(daSalvare))}`;
@@ -770,12 +253,14 @@
 
         return new Promise((resolve) => {
             jsonpRequest(url, 'callback', (data) => {
+                console.log("Risposta server:", data);
                 if (data && data.status !== "nessun_backup" && data.status !== "error") {
                     resolve(data);
                 } else {
                     resolve(null);
                 }
             }, () => {
+                console.warn("Errore JSONP nel recupero backup");
                 resolve(null);
             });
         });
@@ -789,7 +274,6 @@
         }
     }
 
-    // Debounce per il backup remoto
     let backupTimer = null;
     function pianificaBackup() {
         if (backupTimer) clearTimeout(backupTimer);
@@ -816,14 +300,7 @@
     }
 
     function aggiornaModificatori() {
-        const mappa = {
-            forza: 'mod-forza',
-            destrezza: 'mod-destrezza',
-            costituzione: 'mod-costituzione',
-            intelligenza: 'mod-intelligenza',
-            saggezza: 'mod-saggezza',
-            carisma: 'mod-carisma'
-        };
+        const mappa = { forza: 'mod-forza', destrezza: 'mod-destrezza', costituzione: 'mod-costituzione', intelligenza: 'mod-intelligenza', saggezza: 'mod-saggezza', carisma: 'mod-carisma' };
         for (const [campo, idEl] of Object.entries(mappa)) {
             const el = document.getElementById(idEl);
             if (el) {
@@ -857,10 +334,7 @@
         const loreTesto = document.getElementById("lore-testo");
         const btnMod = document.getElementById("btn-modifica-lore");
         const btnSalva = document.getElementById("btn-salva-lore");
-        if (textarea) {
-            textarea.value = testo;
-            textarea.style.display = "block";
-        }
+        if (textarea) { textarea.value = testo; textarea.style.display = "block"; }
         if (loreTesto) loreTesto.style.display = "none";
         if (btnMod) btnMod.style.display = "none";
         if (btnSalva) btnSalva.style.display = "inline-block";
@@ -870,11 +344,7 @@
         const textarea = document.getElementById("lore-textarea");
         if (!textarea) return;
         const nuovo = textarea.value;
-        if (linguaCorrente === "it") {
-            dati.lore_ita = nuovo;
-        } else {
-            dati.lore_eng = nuovo;
-        }
+        if (linguaCorrente === "it") { dati.lore_ita = nuovo; } else { dati.lore_eng = nuovo; }
         salvaTutto();
         disegnaPagina();
     }
@@ -908,9 +378,7 @@
                 <div class="char-img">
                     <img src="${FILE_IMMAGINE_PG}" alt="Personaggio" onerror="this.src='https://via.placeholder.com/140?text=No+Image'">
                 </div>
-                <audio controls>
-                    <source src="${linguaCorrente === "it" ? FILE_AUDIO_ITA : FILE_AUDIO_ENG}" type="audio/mpeg">
-                </audio>
+                <audio controls><source src="${linguaCorrente === "it" ? FILE_AUDIO_ITA : FILE_AUDIO_ENG}" type="audio/mpeg"></audio>
             </div>
 
             <div class="stats-top">
@@ -943,36 +411,12 @@
                 <div class="sheet-card">
                     <h3>${L.title_caratteristiche}</h3>
                     <div class="stats-grid">
-                        <div class="stat-box">
-                            <label>${L.stat_forza}</label>
-                            <input type="number" value="${escapeHtml(dati.forza)}" oninput="salvaCaratteristica('forza', this.value)">
-                            <div class="mod" id="mod-forza">(${modForza >= 0 ? '+' : ''}${modForza})</div>
-                        </div>
-                        <div class="stat-box">
-                            <label>${L.stat_destrezza}</label>
-                            <input type="number" value="${escapeHtml(dati.destrezza)}" oninput="salvaCaratteristica('destrezza', this.value)">
-                            <div class="mod" id="mod-destrezza">(${modDes >= 0 ? '+' : ''}${modDes})</div>
-                        </div>
-                        <div class="stat-box">
-                            <label>${L.stat_costituzione}</label>
-                            <input type="number" value="${escapeHtml(dati.costituzione)}" oninput="salvaCaratteristica('costituzione', this.value)">
-                            <div class="mod" id="mod-costituzione">(${modCos >= 0 ? '+' : ''}${modCos})</div>
-                        </div>
-                        <div class="stat-box">
-                            <label>${L.stat_intelligenza}</label>
-                            <input type="number" value="${escapeHtml(dati.intelligenza)}" oninput="salvaCaratteristica('intelligenza', this.value)">
-                            <div class="mod" id="mod-intelligenza">(${modInt >= 0 ? '+' : ''}${modInt})</div>
-                        </div>
-                        <div class="stat-box">
-                            <label>${L.stat_saggezza}</label>
-                            <input type="number" value="${escapeHtml(dati.saggezza)}" oninput="salvaCaratteristica('saggezza', this.value)">
-                            <div class="mod" id="mod-saggezza">(${modSag >= 0 ? '+' : ''}${modSag})</div>
-                        </div>
-                        <div class="stat-box">
-                            <label>${L.stat_carisma}</label>
-                            <input type="number" value="${escapeHtml(dati.carisma)}" oninput="salvaCaratteristica('carisma', this.value)">
-                            <div class="mod" id="mod-carisma">(${modCar >= 0 ? '+' : ''}${modCar})</div>
-                        </div>
+                        <div class="stat-box"><label>${L.stat_forza}</label><input type="number" value="${escapeHtml(dati.forza)}" oninput="salvaCaratteristica('forza', this.value)"><div class="mod" id="mod-forza">(${modForza >= 0 ? '+' : ''}${modForza})</div></div>
+                        <div class="stat-box"><label>${L.stat_destrezza}</label><input type="number" value="${escapeHtml(dati.destrezza)}" oninput="salvaCaratteristica('destrezza', this.value)"><div class="mod" id="mod-destrezza">(${modDes >= 0 ? '+' : ''}${modDes})</div></div>
+                        <div class="stat-box"><label>${L.stat_costituzione}</label><input type="number" value="${escapeHtml(dati.costituzione)}" oninput="salvaCaratteristica('costituzione', this.value)"><div class="mod" id="mod-costituzione">(${modCos >= 0 ? '+' : ''}${modCos})</div></div>
+                        <div class="stat-box"><label>${L.stat_intelligenza}</label><input type="number" value="${escapeHtml(dati.intelligenza)}" oninput="salvaCaratteristica('intelligenza', this.value)"><div class="mod" id="mod-intelligenza">(${modInt >= 0 ? '+' : ''}${modInt})</div></div>
+                        <div class="stat-box"><label>${L.stat_saggezza}</label><input type="number" value="${escapeHtml(dati.saggezza)}" oninput="salvaCaratteristica('saggezza', this.value)"><div class="mod" id="mod-saggezza">(${modSag >= 0 ? '+' : ''}${modSag})</div></div>
+                        <div class="stat-box"><label>${L.stat_carisma}</label><input type="number" value="${escapeHtml(dati.carisma)}" oninput="salvaCaratteristica('carisma', this.value)"><div class="mod" id="mod-carisma">(${modCar >= 0 ? '+' : ''}${modCar})</div></div>
                     </div>
                 </div>
 
@@ -1023,26 +467,13 @@
             </div>
 
             <div id="tab-features" class="tab-pane">
-                <div class="sheet-card">
-                    <h3>${L.title_tratti_razziali}</h3>
-                    <textarea rows="3" onchange="salvaCampo('tratti_razziali', this.value)">${escapeHtml(dati.tratti_razziali)}</textarea>
-                </div>
-                <div class="sheet-card">
-                    <h3>${L.title_privilegi_classe}</h3>
-                    <textarea rows="3" onchange="salvaCampo('privilegi_classe', this.value)">${escapeHtml(dati.privilegi_classe)}</textarea>
-                </div>
-                <div class="sheet-card">
-                    <h3>${L.title_talenti}</h3>
-                    <textarea rows="3" onchange="salvaCampo('talenti', this.value)">${escapeHtml(dati.talenti)}</textarea>
-                </div>
+                <div class="sheet-card"><h3>${L.title_tratti_razziali}</h3><textarea rows="3" onchange="salvaCampo('tratti_razziali', this.value)">${escapeHtml(dati.tratti_razziali)}</textarea></div>
+                <div class="sheet-card"><h3>${L.title_privilegi_classe}</h3><textarea rows="3" onchange="salvaCampo('privilegi_classe', this.value)">${escapeHtml(dati.privilegi_classe)}</textarea></div>
+                <div class="sheet-card"><h3>${L.title_talenti}</h3><textarea rows="3" onchange="salvaCampo('talenti', this.value)">${escapeHtml(dati.talenti)}</textarea></div>
             </div>
 
             <div id="tab-notes" class="tab-pane">
-                <div class="sheet-card">
-                    <h3>${L.title_note}</h3>
-                    <textarea rows="4" onchange="salvaCampo('note', this.value)">${escapeHtml(dati.note)}</textarea>
-                </div>
-
+                <div class="sheet-card"><h3>${L.title_note}</h3><textarea rows="4" onchange="salvaCampo('note', this.value)">${escapeHtml(dati.note)}</textarea></div>
                 <div class="sheet-card">
                     <h3>${L.title_lore}</h3>
                     <div class="lore-box">
@@ -1067,56 +498,64 @@
     }
 
     // ========================================
-    // CARICAMENTO CON SINCRONIZZAZIONE
+    // CARICAMENTO
     // ========================================
     async function caricaDati() {
         try {
-            // 1. Prova a leggere il backup dal server (fonte di verità)
-            const backup = await recuperaBackup();
+            console.log("🔄 Avvio caricamento...");
 
-            // 2. Leggi anche il locale (fallback / confronto)
             const localiRaw = localStorage.getItem(`pg_${ID_MINIATURA}`);
             const datiLocali = localiRaw ? JSON.parse(localiRaw) : null;
+            console.log("💾 Locale presente:", datiLocali ? "SÌ" : "NO");
 
-            // 3. Decidi quale usare in base al timestamp
-            if (backup && datiLocali) {
-                const t_backup = backup._ultimaModifica || 0;
-                const t_locali = datiLocali._ultimaModifica || 0;
-                if (t_backup >= t_locali) {
-                    dati = backup;
-                    console.log("✅ Caricato dal BACKUP (più recente)");
-                } else {
-                    dati = datiLocali;
-                    console.log("✅ Caricato dal LOCALE (più recente del backup)");
-                    await salvaBackup();
-                }
-            } else if (backup) {
-                dati = backup;
-                console.log("✅ Caricato dal BACKUP");
-            } else if (datiLocali) {
+            if (datiLocali && Object.keys(datiLocali).length > 5) {
                 dati = datiLocali;
-                console.log("✅ Caricato dal LOCALE (backup non disponibile)");
-            } else {
-                dati = JSON.parse(JSON.stringify(DATI_STANDARD));
-                console.log("🆕 Primo avvio: dati standard");
-                await salvaBackup();
+                linguaCorrente = dati.lingua || "it";
+                disegnaPagina();
+                console.log("✅ Disegnato subito dal LOCALE");
             }
 
-            linguaCorrente = dati.lingua || "it";
-            salvaLocale();
-            disegnaPagina();
+            let backup = null;
+            try {
+                backup = await Promise.race([
+                    recuperaBackup(),
+                    new Promise(resolve => setTimeout(() => resolve("TIMEOUT"), 8000))
+                ]);
+                if (backup === "TIMEOUT") { console.warn("⚠️ Timeout backup"); backup = null; }
+            } catch (err) { console.warn("⚠️ Errore backup:", err); backup = null; }
+            console.log("📥 Backup ricevuto:", backup ? "SÌ" : "NO");
 
+            if (backup) {
+                const t_backup = backup._ultimaModifica || 0;
+                const t_locale = datiLocali ? (datiLocali._ultimaModifica || 0) : 0;
+                if (!datiLocali || t_backup > t_locale) {
+                    dati = backup;
+                    linguaCorrente = dati.lingua || "it";
+                    salvaLocale();
+                    disegnaPagina();
+                    console.log("🔄 Aggiornato dal BACKUP");
+                } else {
+                    console.log("✅ Backup non più recente");
+                }
+            } else if (!datiLocali) {
+                console.log("🆕 Prima apertura: carico scheda base Tharnax");
+                dati = JSON.parse(JSON.stringify(DATI_STANDARD));
+                linguaCorrente = "it";
+                disegnaPagina();
+                await salvaBackup();
+                console.log("✅ Scheda base salvata per:", ID_MINIATURA);
+            }
         } catch (e) {
             console.log("Errore caricamento:", e);
             const contenuto = document.getElementById("contenuto");
             if (contenuto) {
-                contenuto.innerHTML = '<div style="text-align:center; padding:60px; color:red;">❌ Errore nel caricamento. Ricarica la pagina.</div>';
+                contenuto.innerHTML = `<div style="text-align:center; padding:60px; color:red;">❌ Errore nel caricamento.<br><small>${escapeHtml(String(e))}</small><br><br><button onclick="location.reload()">Ricarica</button></div>`;
             }
         }
     }
 
     // ========================================
-    // SINCRONIZZAZIONE AUTOMATICA AL RITORNO
+    // SYNC AUTOMATICO AL RITORNO
     // ========================================
     document.addEventListener('visibilitychange', async () => {
         if (document.visibilityState !== 'visible') return;
@@ -1136,14 +575,10 @@
                     mostraStato("🔄 Sincronizzato dal server");
                 }
             }
-        } catch (e) {
-            console.warn("Errore sync:", e);
-        } finally {
-            sincronizzazioneInCorso = false;
-        }
+        } catch (e) { console.warn("Errore sync:", e); }
+        finally { sincronizzazioneInCorso = false; }
     });
 
-    // Esponi funzioni globali
     window.setLingua = setLingua;
     window.switchTab = switchTab;
     window.abilitaModificaLore = abilitaModificaLore;
